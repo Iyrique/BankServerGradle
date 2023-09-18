@@ -1,2 +1,6 @@
 rootProject.name = 'BankServer'
+include 'Domain'
+include 'Generator'
+include 'Serialization'
+include 'Deserialization'
 
