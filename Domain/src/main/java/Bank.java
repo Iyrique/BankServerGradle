@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
@@ -6,5 +7,9 @@ public class Bank {
 
     public Bank(List<Client> clients) {
         this.clients = clients;
+    }
+
+    public Bank() {
+        this.clients = new ArrayList<>();
     }
 }

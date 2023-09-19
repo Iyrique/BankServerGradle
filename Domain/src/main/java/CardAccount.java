@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardAccount {
@@ -18,6 +19,7 @@ public class CardAccount {
         this.birthday = birthday;
         this.accountNumber = accountNumber;
         this.codeWord = codeWord;
+        this.cards = new ArrayList<>();
     }
 
     public void setClientName(String clientName) {
