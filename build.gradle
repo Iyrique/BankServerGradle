@@ -15,6 +15,7 @@ dependencies {
     implementation project(':Generator')
     implementation project(':Serialization')
     implementation project(':Domain')
+    implementation project(':Deserialization')
 }
 
 test {

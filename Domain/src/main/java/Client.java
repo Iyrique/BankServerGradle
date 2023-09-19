@@ -1,13 +1,35 @@
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Client {
 
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("birthday")
     private String birthday;
+    @JsonProperty("credits")
     private List<Credit> credits; //Кредитные договоры
+    @JsonProperty("deposits")
     private List<Deposit> deposits; //Депозитные договоры
+    @JsonProperty("cardAccount")
     private List<CardAccount> cardAccounts; //Договоры, по карточным счетам
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", credits=" + credits +
+                ", deposits=" + deposits +
+                ", cardAccounts=" + cardAccounts +
+                '}';
+    }
+
+    public Client() {
+    }
 
     public Client(int id, String name, String birthday, List<Credit> credits,
                   List<Deposit> deposits, List<CardAccount> cardAccounts) {
