@@ -56,7 +56,7 @@ public class Generator {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    private static List<Client> generateObjects() {
+    public static List<Client> generateObjects() {
         List<Client> objects = new ArrayList<>();
         for (int i = 1; i <= 1000000; i++) {
             objects.add(new Client(i, generateRandomName(), generateRandomDate(1950, 2009), new ArrayList<>(),
