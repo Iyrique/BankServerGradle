@@ -17,6 +17,15 @@ dependencies {
     implementation project(":Generator")
 }
 
+apply plugin: 'java'
+apply plugin: 'application'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'GenerationAndSerialization'
+    }
+}
+
 test {
     useJUnitPlatform()
 }
