@@ -1,11 +1,10 @@
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Generator {
 
     private static final List<String> FIRST_NAMES = loadNames("Generator/src/main/resources/names.txt");
-    private static final List<String> LAST_NAMES = loadNames("Generator/src/main/resources//surnames.txt");
+    private static final List<String> LAST_NAMES = loadNames("Generator/src/main/resources/surnames.txt");
 
     private static List<String> loadNames(String fileName) {
         List<String> names = new ArrayList<>();
@@ -64,13 +63,4 @@ public class Generator {
         }
         return objects;
     }
-
-//    public static void main(String[] args) {
-//        for (int i = 0; i < 100; i++) {
-//            String randomName = generateRandomName();
-//            String date = generateRandomDate(1950, 2009);
-//            System.out.println(randomName);
-//            System.out.println(date);
-//        }
-//    }
 }

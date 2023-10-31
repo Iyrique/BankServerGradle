@@ -9,9 +9,6 @@ public class Serialization<T> {
     public void serializeObjectsToJson(List<T> objects, String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Serialize the objects to JSON
-        String json = objectMapper.writeValueAsString(objects);
-
         // Write the JSON to a file
         try {
             File file = new File(filePath);
