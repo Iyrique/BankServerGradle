@@ -13,12 +13,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
-    implementation project(":Domain")
-    implementation project(":Generator")
+    implementation (project(":Domain"))
+    implementation (project(":Generator"))
 }
-
-apply plugin: 'java'
-apply plugin: 'application'
 
 jar {
     manifest {

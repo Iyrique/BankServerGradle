@@ -3,4 +3,5 @@ include 'Domain'
 include 'Generator'
 include 'Serialization'
 include 'Deserialization'
+include 'DBConnectorPopulator'
 

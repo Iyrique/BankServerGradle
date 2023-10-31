@@ -1,14 +1,26 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Credit {
 
+    @JsonProperty("id_credit")
     private final int id;
+    @JsonProperty("id_cl")
     private final int clientId;
+    @JsonProperty("clientName")
     private String clientName;
+    @JsonProperty("birthday")
     private String birthday;
+    @JsonProperty("period")
     private String period;
+    @JsonProperty("monthlyPayment")
     private double monthlyPayment;
+    @JsonProperty("percent")
+    private double percent;
+    @JsonProperty("sum")
     private double sum;
+    @JsonProperty("requisites")
     private final String requisites;
 
     public void setClientName(String clientName) {
@@ -35,14 +47,19 @@ public class Credit {
         return requisites;
     }
 
+    public double getPercent() {
+        return percent;
+    }
+
     public Credit(int id, int clientId, String clientName, String birthday,
-                  String period, double monthlyPayment, double sum, String requisites) {
+                  String period, double monthlyPayment, double percent, double sum, String requisites) {
         this.id = id;
         this.clientId = clientId;
         this.clientName = clientName;
         this.birthday = birthday;
         this.period = period;
         this.monthlyPayment = monthlyPayment;
+        this.percent = percent;
         this.sum = sum;
         this.requisites = requisites;
     }
