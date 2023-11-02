@@ -55,10 +55,27 @@ public class Generator {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
+    private static boolean randBool() {
+        Random random = new Random();
+        return random.nextBoolean();
+    }
+
+    private static int randNum(int bound) {
+        Random random = new Random();
+        return random.nextInt(bound);
+    }
+
+    private static Credit generateCredit(int id, String name, String birthday,
+                                         String period, double payment, double percent) {
+
+    }
+
     public static List<Client> generateObjects() {
         List<Client> objects = new ArrayList<>();
         for (int i = 1; i <= 1000000; i++) {
-            objects.add(new Client(i, generateRandomName(), generateRandomDate(1950, 2009), new ArrayList<>(),
+            String name = generateRandomName();
+            String birthday = generateRandomDate(1950, 2009);
+            objects.add(new Client(i, name, birthday, new ArrayList<>(),
                     new ArrayList<>(), new ArrayList<>()));
         }
         return objects;

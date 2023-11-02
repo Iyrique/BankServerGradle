@@ -4,8 +4,6 @@ import java.util.List;
 
 public class Credit {
 
-    @JsonProperty("id_credit")
-    private final int id;
     @JsonProperty("id_cl")
     private final int clientId;
     @JsonProperty("clientName")
@@ -51,9 +49,8 @@ public class Credit {
         return percent;
     }
 
-    public Credit(int id, int clientId, String clientName, String birthday,
+    public Credit(int clientId, String clientName, String birthday,
                   String period, double monthlyPayment, double percent, double sum, String requisites) {
-        this.id = id;
         this.clientId = clientId;
         this.clientName = clientName;
         this.birthday = birthday;
@@ -64,9 +61,6 @@ public class Credit {
         this.requisites = requisites;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public int getClientId() {
         return clientId;
