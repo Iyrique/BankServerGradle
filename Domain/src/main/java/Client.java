@@ -53,18 +53,6 @@ public class Client {
         this.birthday = birthday;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
     public void setCardAccounts(CardAccount cardAccounts) {
         this.cardAccounts = cardAccounts;
     }
@@ -75,6 +63,18 @@ public class Client {
 
     public void setCredits(List<Credit> credits) {
         this.credits = credits;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthday() {
+        return birthday;
     }
 
     public CardAccount getCardAccounts() {

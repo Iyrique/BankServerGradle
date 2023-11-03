@@ -19,6 +19,9 @@ public class CardAccount {
     @JsonProperty("card")
     private Card cards;
 
+    public CardAccount() {
+    }
+
     public CardAccount(int clientId, String clientName, String birthday,
                        Account accountNumber, String codeWord, Card card) {
         this.clientId = clientId;
@@ -27,37 +30,6 @@ public class CardAccount {
         this.accountNumber = accountNumber;
         this.codeWord = codeWord;
         this.cards = card;
-    }
-
-    public CardAccount() {
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setCodeWord(String codeWord) {
-        this.codeWord = codeWord;
-    }
-
-    public Card getCards() {
-        return cards;
-    }
-
-    public void setCards(Card cards) {
-        this.cards = cards;
-    }
-
-    public void setAccountNumber(Account accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public int getClientId() {
@@ -80,10 +52,24 @@ public class CardAccount {
         return codeWord;
     }
 
-
+    public Card getCard() {
+        return cards;
+    }
 
     public void setCards(String num, String per, String clientName, String CVV, String code, int pin, Account cardAccId) {
         cards = new Card(num, per, clientName, CVV, code, pin, cardAccId);
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setCodeWord(String codeWord) {
+        this.codeWord = codeWord;
     }
 
     public void closeCard(int numberCard) {

@@ -49,6 +49,23 @@ public class Card {
         return CVV;
     }
 
+    public String getCodeForCheckCVV() {
+        return codeForCheckCVV;
+    }
+
+    public int getPIN() {
+        return PIN;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+
+    public void setPIN(int PIN) {
+        this.PIN = PIN;
+    }
+
     public void setAccount(Account account) {
         this.account = account;
     }
@@ -71,23 +88,6 @@ public class Card {
 
     public void setPersonName(String personName) {
         this.personName = personName;
-    }
-
-    public String getCodeForCheckCVV() {
-        return codeForCheckCVV;
-    }
-
-    public int getPIN() {
-        return PIN;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-
-    public void setPIN(int PIN) {
-        this.PIN = PIN;
     }
 
     public void topUpBalance(double sum) {

@@ -1,10 +1,9 @@
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Account {
 
-    @JsonProperty("cl_id")
+    @JsonIgnore
     private int cardAccId;
     @JsonProperty("balance")
     private double balance;

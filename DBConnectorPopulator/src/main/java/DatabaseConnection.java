@@ -12,16 +12,12 @@ public class DatabaseConnection {
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
             System.out.println("Connect!");
-//            BankDAO bankDAO = new BankDAO(connection);
-//            bankDAO.insertObject("Sber");
-//            bankDAO.insertObject("Tinkoff");
-//            bankDAO.insertObject("Gazprom");
-//            bankDAO.insertObject("Alfa");
-//            bankDAO.insertObject("VTB");
-//            bankDAO.insertObject("PochtaBank");
-//            bankDAO.getAll();
-//            ClientDAO clientDAO = new ClientDAO(connection);
-//            clientDAO.insertObjects();
+            DAO dao = new DAO(connection);
+//            dao.insertObjectToBank("Sber");
+//            dao.insertObjectsToClients();
+//            dao.insertObjectsToCredits();
+//            dao.insertObjectsToDeposits();
+
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();

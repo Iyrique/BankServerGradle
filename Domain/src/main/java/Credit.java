@@ -11,27 +11,6 @@ public class Credit {
     private String clientName;
     @JsonIgnore()
     private String birthday;
-
-    public void setPercent(double percent) {
-        this.percent = percent;
-    }
-
-    public void setRequisites(String requisites) {
-        this.requisites = requisites;
-    }
-
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
-
-    public void setMonthlyPayment(double monthlyPayment) {
-        this.monthlyPayment = monthlyPayment;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
     @JsonProperty("period")
     private String period;
     @JsonProperty("monthlyPayment")
@@ -41,30 +20,10 @@ public class Credit {
     @JsonProperty("sum")
     private double sum;
 
-    public Credit() {
-    }
-
     @JsonProperty("requisites")
     private String requisites;
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
-    }
-
-    public String getRequisites() {
-        return requisites;
-    }
-
-    public double getPercent() {
-        return percent;
+    public Credit() {
     }
 
     public Credit(int clientId, String clientName, String birthday,
@@ -79,6 +38,13 @@ public class Credit {
         this.requisites = requisites;
     }
 
+    public String getRequisites() {
+        return requisites;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
 
     public int getClientId() {
         return clientId;
@@ -102,6 +68,38 @@ public class Credit {
 
     public double getSum() {
         return sum;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
+    }
+
+    public void setRequisites(String requisites) {
+        this.requisites = requisites;
+    }
+
+    public void setSum(double sum) {
+        this.sum = sum;
+    }
+
+    public void setMonthlyPayment(double monthlyPayment) {
+        this.monthlyPayment = monthlyPayment;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public void depositMoney(double sum) {

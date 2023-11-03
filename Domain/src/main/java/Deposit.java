@@ -24,20 +24,19 @@ public class Deposit {
     @JsonProperty("Withdraw")
     private boolean abilityWithdraw;
 
-    public void setAbilityWithdraw(boolean abilityWithdraw) {
-        this.abilityWithdraw = abilityWithdraw;
-    }
-
-    public void setRequisites(String requisites) {
-        this.requisites = requisites;
-    }
-
-    public void setAbilityTopUp(boolean abilityTopUp) {
-        this.abilityTopUp = abilityTopUp;
-    }
-
-    public void setClientId(int clientId) {
+    public Deposit(int clientId, String clientName, String birthday,
+                   double sum, double percent, String period,
+                   String requisites, boolean abilityTopUp,
+                   boolean abilityWithdraw) {
         this.clientId = clientId;
+        this.clientName = clientName;
+        this.birthday = birthday;
+        this.sum = sum;
+        this.percent = percent;
+        this.period = period;
+        this.requisites = requisites;
+        this.abilityTopUp = abilityTopUp;
+        this.abilityWithdraw = abilityWithdraw;
     }
 
     public Deposit() {
@@ -63,23 +62,24 @@ public class Deposit {
         this.sum = sum;
     }
 
-    public double getSum() {
-        return sum;
+    public void setAbilityWithdraw(boolean abilityWithdraw) {
+        this.abilityWithdraw = abilityWithdraw;
     }
 
-    public Deposit(int clientId, String clientName, String birthday,
-                   double sum, double percent, String period,
-                   String requisites, boolean abilityTopUp,
-                   boolean abilityWithdraw) {
-        this.clientId = clientId;
-        this.clientName = clientName;
-        this.birthday = birthday;
-        this.sum = sum;
-        this.percent = percent;
-        this.period = period;
+    public void setRequisites(String requisites) {
         this.requisites = requisites;
+    }
+
+    public void setAbilityTopUp(boolean abilityTopUp) {
         this.abilityTopUp = abilityTopUp;
-        this.abilityWithdraw = abilityWithdraw;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public double getSum() {
+        return sum;
     }
 
     public int getClientId() {
