@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Card {
 
-    @JsonProperty("cardNum")
+    @JsonProperty("card_number")
     private String cardNumber;
-    @JsonProperty("cardPer")
+    @JsonProperty("card_period")
     private String cardPeriod;
     @JsonIgnore
     private String personName;
-    @JsonProperty("CVV")
+    @JsonProperty("cvv")
     private String CVV;
-    @JsonProperty("code")
+    @JsonProperty("code_for_cvv")
     private String codeForCheckCVV;
-    @JsonProperty("Pin")
+    @JsonProperty("pin")
     private int PIN;
     @JsonProperty("acc")
     private Account account;

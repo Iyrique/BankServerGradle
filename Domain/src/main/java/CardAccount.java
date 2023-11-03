@@ -14,7 +14,7 @@ public class CardAccount {
     private String birthday;
     @JsonProperty("account")
     private Account accountNumber;
-    @JsonProperty("codeWord")
+    @JsonProperty("code_word")
     private String codeWord;
     @JsonProperty("card")
     private Card cards;

@@ -20,10 +20,11 @@ public class DAO {
         this.OBJECTS = deserialization.deserializeJsonToObjects(FILEPATH, Client.class);
     }
 
-    public void insertObjectToBank(String bankName) {
-        String sql = "INSERT INTO bank (bank_name) VALUES (?)";
+    public void insertObjectToBank(int id, String bankName) {
+        String sql = "INSERT INTO bank (bank_id, bank_name) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, bankName);
+            statement.setInt(1, id);
+            statement.setString(2, bankName);
             statement.executeUpdate();
             System.out.println("Insert successful.");
         } catch (SQLException e) {
@@ -69,7 +70,7 @@ public class DAO {
     }
 
     public void insertObjectsToCredits() {
-        String sql = "INSERT INTO credits (client_id, credit_sum, credit_percent, monthlyPayment, period, requisites) " +
+        String sql = "INSERT INTO credits (client_id, credit_sum, credit_percent, payment, period, requisites) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Client client : OBJECTS) {
@@ -92,7 +93,7 @@ public class DAO {
     }
 
     public void insertObjectsToDeposits() {
-        String sql = "INSERT INTO deposits (cl_id, sum, percent, period, requisites, topUp, withdraw) VALUES " +
+        String sql = "INSERT INTO deposits (cl_id, sum, percent, period, requisites, top_up, withdraw) VALUES " +
                 "(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Client client : OBJECTS) {
@@ -116,7 +117,7 @@ public class DAO {
     }
 
     public void insertObjectsToCardAccount() {
-        String sql = "INSERT INTO card_accounts (client_id, acc_number, codeWord) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO card_accounts (client_id, acc_number, code_word) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Client client : OBJECTS) {
                 CardAccount cardAccount = client.getCardAccounts();
@@ -147,7 +148,7 @@ public class DAO {
     }
 
     public void insertObjectsToCards() {
-        String sql = "INSERT INTO cards (client_id, card_number, card_period, person_name, cvv, codeForCheckCVV, PIN) " +
+        String sql = "INSERT INTO cards (client_id, card_number, card_period, person_name, cvv, code_for_cvv, pin) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Client client : OBJECTS) {
