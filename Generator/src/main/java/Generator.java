@@ -5,6 +5,8 @@ public class Generator {
 
     private static final List<String> FIRST_NAMES = loadNames("Generator/src/main/resources/names.txt");
     private static final List<String> LAST_NAMES = loadNames("Generator/src/main/resources/surnames.txt");
+    private static Set<String> requisites = new HashSet<>();
+    private static Set<String> cards = new HashSet<>();
 
     private static List<String> loadNames(String fileName) {
         List<String> names = new ArrayList<>();
@@ -30,23 +32,17 @@ public class Generator {
 
     private static String generateRandomDate(int startYear, int endYear) {
         Random random = new Random();
-
         // Generate a random year between startYear and endYear
         int year = startYear + random.nextInt(endYear - startYear + 1);
-
         // Generate a random month (1-12)
         int month = random.nextInt(12) + 1;
-
         // Generate a random day within the selected month
         int maxDay = getMaxDayInMonth(year, month);
         int day = random.nextInt(maxDay) + 1;
-
         // Create a Calendar instance and set the random year, month, and day
         Calendar calendar = new GregorianCalendar(year, month - 1, day);
-
         // Format the date as "DD.MM.YYYY"
         String formattedDate = String.format("%02d.%02d.%04d", day, month, year);
-
         return formattedDate;
     }
 
@@ -62,12 +58,145 @@ public class Generator {
 
     private static int randNum(int bound) {
         Random random = new Random();
-        return random.nextInt(bound);
+        return random.nextInt(bound) + 1;
     }
 
-    private static Credit generateCredit(int id, String name, String birthday,
-                                         String period, double payment, double percent) {
+    // Генерация случайного номера счета
+    private static String generateReq() {
+        Random random = new Random();
+        long accountNumber = 1000000000L + random.nextInt(900000000);
+        return String.valueOf(accountNumber);
+    }
 
+    private static String generateLoanPeriod() {
+        Random random = new Random();
+        int months = 12 + random.nextInt(49); // 12 + случайное число от 0 до 49
+        return Integer.toString(months);
+    }
+
+    private static String generatePeriod() {
+        Random random = new Random();
+        int months = 3 + random.nextInt(117); // 12 + случайное число от 0 до 49
+        return Integer.toString(months);
+    }
+
+    // Генерация случайного ежемесячного платежа (от 100.00 до 50000.00)
+    private static double generateMonthlyPayment() {
+        Random random = new Random();
+        double minPayment = 100.00;
+        double maxPayment = 50000.00;
+        double monthlyPayment = minPayment + (maxPayment - minPayment) * random.nextDouble();
+        return Math.round(monthlyPayment * 100.0) / 100.0; // Округление до двух знаков после запятой
+    }
+
+    // Генерация случайного процента кредита (от 5.00% до 15.00%)
+    private static double generateInterestRate() {
+        Random random = new Random();
+        double minRate = 5.00;
+        double maxRate = 15.00;
+        double interestRate = minRate + (maxRate - minRate) * random.nextDouble();
+        return Math.round(interestRate * 100.0) / 100.0; // Округление до двух знаков после запятой
+    }
+
+    // Генерация случайной суммы кредита (от $1000.00 до $400000.00)
+    private static double generateLoanAmount() {
+        Random random = new Random();
+        double minAmount = 1000.00;
+        double maxAmount = 400000.00;
+        double loanAmount = minAmount + (maxAmount - minAmount) * random.nextDouble();
+        return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
+    }
+
+    // Генерация случайной суммы кредита (от $1000.00 до $4000000.00)
+    private static double generateSum() {
+        Random random = new Random();
+        double minAmount = 1000.00;
+        double maxAmount = 4000000.00;
+        double loanAmount = minAmount + (maxAmount - minAmount) * random.nextDouble();
+        return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
+    }
+
+    private static Credit generateCredit(int client_id, String name, String birthday) {
+        String req = generateReq();
+        while (true) {
+            if (requisites.contains(req)) {
+                req = generateReq();
+            } else {
+                requisites.add(req);
+                break;
+            }
+        }
+        return new Credit(client_id, name, birthday, generateLoanPeriod(), generateMonthlyPayment(),
+                generateInterestRate(), generateLoanAmount(), req);
+    }
+
+    private static List<Credit> generateListCredit(int client_id, String name, String birthday) {
+        List<Credit> list = new ArrayList<>();
+        boolean b = randBool();
+        if (b) {
+            int num = randNum(5);
+            for (int i = 0; i < num; i++) {
+                list.add(generateCredit(client_id, name, birthday));
+            }
+        }
+        return list;
+    }
+
+    private static Deposit generateDeposit(int client_id, String name, String birthday) {
+        String req = generateReq();
+        while (true) {
+            if (requisites.contains(req)) {
+                req = generateReq();
+            } else {
+                requisites.add(req);
+                break;
+            }
+        }
+        return new Deposit(client_id, name, birthday, generateSum(), generateInterestRate(), generatePeriod(), req,
+                randBool(), randBool());
+    }
+
+    private static List<Deposit> generateListDeposit(int client_id, String name, String birthday) {
+        List<Deposit> list = new ArrayList<>();
+        boolean b = randBool();
+        if (b) {
+            int num = randNum(5);
+            for (int i = 0; i < num; i++) {
+                list.add(generateDeposit(client_id, name, birthday));
+            }
+        }
+        return list;
+    }
+
+    // Генерация случайного номера кредитной карты
+    private static String generateCreditCardNumber() {
+        Random random = new Random();
+        StringBuilder cardNumber = new StringBuilder("4"); // Первая цифра 4 для Visa, можно выбрать другую для других типов карт
+
+        for (int i = 1; i < 16; i++) {
+            int digit = random.nextInt(10);
+            cardNumber.append(digit);
+            if (i % 4 == 0 && i < 15) {
+                cardNumber.append(" "); // Разделители каждые 4 цифры
+            }
+        }
+
+        return cardNumber.toString();
+    }
+
+    private static CardAccount generateCardAccount(int client_id, String name, String birthday) {
+        String num = generateCreditCardNumber();
+        while (true) {
+            if (cards.contains(num)) {
+                num = generateCreditCardNumber();
+            } else {
+                cards.add(num);
+                break;
+            }
+        }
+        Account account = new Account(client_id, generateSum());
+        return new CardAccount(client_id, name, birthday, account, "codeword",
+                new Card(num, "48", name, "CVV", "code", 123, account));
     }
 
     public static List<Client> generateObjects() {
@@ -75,8 +204,8 @@ public class Generator {
         for (int i = 1; i <= 1000000; i++) {
             String name = generateRandomName();
             String birthday = generateRandomDate(1950, 2009);
-            objects.add(new Client(i, name, birthday, new ArrayList<>(),
-                    new ArrayList<>(), new ArrayList<>()));
+            objects.add(new Client(i, name, birthday, generateListCredit(i, name, birthday),
+                    generateListDeposit(i, name, birthday), generateCardAccount(i, name, birthday)));
         }
         return objects;
     }

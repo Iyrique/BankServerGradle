@@ -14,7 +14,7 @@ public class Client {
     @JsonProperty("deposits")
     private List<Deposit> deposits; //Депозитные договоры
     @JsonProperty("cardAccount")
-    private List<CardAccount> cardAccounts; //Договоры, по карточным счетам
+    private CardAccount cardAccounts; //Договоры, по карточным счетам
 
     @Override
     public String toString() {
@@ -32,7 +32,7 @@ public class Client {
     }
 
     public Client(int id, String name, String birthday, List<Credit> credits,
-                  List<Deposit> deposits, List<CardAccount> cardAccounts) {
+                  List<Deposit> deposits, CardAccount cardAccounts) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -65,6 +65,22 @@ public class Client {
         return birthday;
     }
 
+    public void setCardAccounts(CardAccount cardAccounts) {
+        this.cardAccounts = cardAccounts;
+    }
+
+    public void setDeposits(List<Deposit> deposits) {
+        this.deposits = deposits;
+    }
+
+    public void setCredits(List<Credit> credits) {
+        this.credits = credits;
+    }
+
+    public CardAccount getCardAccounts() {
+        return cardAccounts;
+    }
+
     public List<Credit> getCredits() {
         return credits;
     }
@@ -73,20 +89,12 @@ public class Client {
         return deposits;
     }
 
-    public List<CardAccount> getCardAccount() {
-        return cardAccounts;
-    }
-
     public void addCredit(Credit credit) {
         credits.add(credit);
     }
 
     public void addDeposit(Deposit deposit) {
         deposits.add(deposit);
-    }
-
-    public void addCardAccount(CardAccount cardAccount) {
-        cardAccounts.add(cardAccount);
     }
 
     public double getCardBalance(int cardNumber) {

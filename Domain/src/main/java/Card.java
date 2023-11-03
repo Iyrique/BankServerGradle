@@ -1,21 +1,36 @@
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Card {
 
-    private final String cardNumber;
-    private final String cardPeriod;
-    private final String personName;
-    private final String CVV;
-    private final String codeForCheckCVV;
+    @JsonProperty("cardNum")
+    private String cardNumber;
+    @JsonProperty("cardPer")
+    private String cardPeriod;
+    @JsonIgnore
+    private String personName;
+    @JsonProperty("CVV")
+    private String CVV;
+    @JsonProperty("code")
+    private String codeForCheckCVV;
+    @JsonProperty("Pin")
     private int PIN;
-    private final Account account;
+    @JsonProperty("acc")
+    private Account account;
 
     public Card(String cardNumber, String cardPeriod, String personName,
-                String CVV, String codeForCheckCVV, Account account) {
+                String CVV, String codeForCheckCVV, int pin,  Account account) {
         this.cardNumber = cardNumber;
         this.cardPeriod = cardPeriod;
         this.personName = personName;
         this.CVV = CVV;
+        this.PIN = pin;
         this.codeForCheckCVV = codeForCheckCVV;
         this.account = account;
+    }
+
+    public Card() {
     }
 
     public String getCardNumber() {
@@ -34,6 +49,30 @@ public class Card {
         return CVV;
     }
 
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setCodeForCheckCVV(String codeForCheckCVV) {
+        this.codeForCheckCVV = codeForCheckCVV;
+    }
+
+    public void setCVV(String CVV) {
+        this.CVV = CVV;
+    }
+
+    public void setCardPeriod(String cardPeriod) {
+        this.cardPeriod = cardPeriod;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
+    }
+
     public String getCodeForCheckCVV() {
         return codeForCheckCVV;
     }
@@ -46,9 +85,6 @@ public class Card {
         return account;
     }
 
-    public double getBalance() {
-        return 0;
-    }
 
     public void setPIN(int PIN) {
         this.PIN = PIN;
