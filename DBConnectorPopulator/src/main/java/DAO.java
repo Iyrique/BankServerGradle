@@ -138,7 +138,7 @@ public class DAO {
             for (Client client : OBJECTS) {
                 Account account = client.getCardAccounts().getAccountNumber();
                 statement.setString(1, String.valueOf(account.getBalance()));
-                statement.setInt(2, account.getCardAccId());
+                statement.setInt(2, client.getId());
                 statement.executeUpdate();
             }
             System.out.println("Insert accounts successful.");

@@ -80,7 +80,7 @@ public class Generator {
         return Integer.toString(months);
     }
 
-    // Генерация случайного ежемесячного платежа (от 100.00 до 50000.00)
+    // Генерация случайного ежемесячного платежа
     private static double generateMonthlyPayment() {
         Random random = new Random();
         double minPayment = 100.00;
@@ -89,7 +89,7 @@ public class Generator {
         return Math.round(monthlyPayment * 100.0) / 100.0; // Округление до двух знаков после запятой
     }
 
-    // Генерация случайного процента кредита (от 5.00% до 15.00%)
+    // Генерация случайного процента кредита
     private static double generateInterestRate() {
         Random random = new Random();
         double minRate = 5.00;
@@ -98,7 +98,7 @@ public class Generator {
         return Math.round(interestRate * 100.0) / 100.0; // Округление до двух знаков после запятой
     }
 
-    // Генерация случайной суммы кредита (от $1000.00 до $400000.00)
+    // Генерация случайной суммы кредита
     private static double generateLoanAmount() {
         Random random = new Random();
         double minAmount = 100000.00;
@@ -107,10 +107,10 @@ public class Generator {
         return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
     }
 
-    // Генерация случайной суммы (от $1000.00 до $4000000.00)
+    // Генерация случайной суммы
     private static double generateSum() {
         Random random = new Random();
-        double minAmount = 10000.00;
+        double minAmount = 100.00;
         double maxAmount = 40000000.00;
         double loanAmount = minAmount + (maxAmount - minAmount) * random.nextDouble();
         return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
@@ -171,9 +171,9 @@ public class Generator {
     // Генерация случайного номера кредитной карты
     private static String generateCreditCardNumber() {
         Random random = new Random();
-        StringBuilder cardNumber = new StringBuilder("4"); // Первая цифра 4 для Visa, можно выбрать другую для других типов карт
+        StringBuilder cardNumber = new StringBuilder("2"); // Первая цифра 2 для Мир
 
-        for (int i = 1; i < 16; i++) {
+        for (int i = 2; i <= 16; i++) {
             int digit = random.nextInt(10);
             cardNumber.append(digit);
             if (i % 4 == 0 && i < 15) {
