@@ -101,17 +101,17 @@ public class Generator {
     // Генерация случайной суммы кредита (от $1000.00 до $400000.00)
     private static double generateLoanAmount() {
         Random random = new Random();
-        double minAmount = 1000.00;
-        double maxAmount = 400000.00;
+        double minAmount = 100000.00;
+        double maxAmount = 4000000.00;
         double loanAmount = minAmount + (maxAmount - minAmount) * random.nextDouble();
         return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
     }
 
-    // Генерация случайной суммы кредита (от $1000.00 до $4000000.00)
+    // Генерация случайной суммы (от $1000.00 до $4000000.00)
     private static double generateSum() {
         Random random = new Random();
-        double minAmount = 1000.00;
-        double maxAmount = 4000000.00;
+        double minAmount = 10000.00;
+        double maxAmount = 40000000.00;
         double loanAmount = minAmount + (maxAmount - minAmount) * random.nextDouble();
         return Math.round(loanAmount * 100.0) / 100.0; // Округление до двух знаков после запятой
     }

@@ -13,13 +13,13 @@ public class DatabaseConnection {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
             System.out.println("Connect!");
             DAO dao = new DAO(connection);
-//            dao.insertObjectToBank(1, "Sber");
-//            dao.insertObjectsToClients();
+            dao.insertObjectToBank(1, "Sber");
+            dao.insertObjectsToClients();
             dao.insertObjectsToCredits();
-//            dao.insertObjectsToDeposits();
-//            dao.insertObjectsToCardAccount();
-//            dao.insertObjectsToAccount();
-//            dao.insertObjectsToCards();
+            dao.insertObjectsToDeposits();
+            dao.insertObjectsToCardAccount();
+            dao.insertObjectsToAccount();
+            dao.insertObjectsToCards();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
