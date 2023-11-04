@@ -4,4 +4,5 @@ include 'Generator'
 include 'Serialization'
 include 'Deserialization'
 include 'DBConnectorPopulator'
+include 'CRUD'
 
