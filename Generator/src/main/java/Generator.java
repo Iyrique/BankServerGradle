@@ -68,18 +68,6 @@ public class Generator {
         return String.valueOf(accountNumber);
     }
 
-    private static String generateLoanPeriod() {
-        Random random = new Random();
-        int months = 12 + random.nextInt(49); // 12 + случайное число от 0 до 49
-        return Integer.toString(months);
-    }
-
-    private static String generatePeriod() {
-        Random random = new Random();
-        int months = 3 + random.nextInt(117); // 12 + случайное число от 0 до 49
-        return Integer.toString(months);
-    }
-
     // Генерация случайного ежемесячного платежа
     private static double generateMonthlyPayment() {
         Random random = new Random();
@@ -126,7 +114,7 @@ public class Generator {
                 break;
             }
         }
-        return new Credit(client_id, name, birthday, generateLoanPeriod(), generateMonthlyPayment(),
+        return new Credit(client_id, name, birthday, generateRandomDate(2024, 2044), generateMonthlyPayment(),
                 generateInterestRate(), generateLoanAmount(), req);
     }
 
@@ -134,7 +122,7 @@ public class Generator {
         List<Credit> list = new ArrayList<>();
         boolean b = randBool();
         if (b) {
-            int num = randNum(5);
+            int num = randNum(2);
             for (int i = 0; i < num; i++) {
                 list.add(generateCredit(client_id, name, birthday));
             }
@@ -152,7 +140,7 @@ public class Generator {
                 break;
             }
         }
-        return new Deposit(client_id, name, birthday, generateSum(), generateInterestRate(), generatePeriod(), req,
+        return new Deposit(client_id, name, birthday, generateSum(), generateInterestRate(), generateRandomDate(2024, 2040), req,
                 randBool(), randBool());
     }
 
@@ -160,7 +148,7 @@ public class Generator {
         List<Deposit> list = new ArrayList<>();
         boolean b = randBool();
         if (b) {
-            int num = randNum(5);
+            int num = randNum(3);
             for (int i = 0; i < num; i++) {
                 list.add(generateDeposit(client_id, name, birthday));
             }
@@ -196,7 +184,7 @@ public class Generator {
         }
         Account account = new Account(client_id, generateSum());
         return new CardAccount(client_id, name, birthday, account, "codeword",
-                new Card(num, "48", name, "CVV", "code", 123, account));
+                new Card(num, generateRandomDate(2024,2034), name, "CVV", "code", 123, account));
     }
 
     public static List<Client> generateObjects() {

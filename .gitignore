@@ -5,3 +5,5 @@
 /Generator/build/
 /Serialization/build/
 /Deserialization/build/
+/DBConnectorPopulator/build/
+/CRUD/build/

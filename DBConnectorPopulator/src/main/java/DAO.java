@@ -122,7 +122,7 @@ public class DAO {
             for (Client client : OBJECTS) {
                 CardAccount cardAccount = client.getCardAccounts();
                 statement.setInt(1, client.getId());
-                statement.setString(2, String.valueOf(cardAccount.getAccountNumber().getCardAccId()));
+                statement.setString(2, String.valueOf(client.getId()));
                 statement.setString(3, cardAccount.getCodeWord());
                 statement.executeUpdate();
             }
@@ -132,13 +132,30 @@ public class DAO {
         }
     }
 
+    private int getIdCardAccountId(int clientId) {
+        String sql = "SELECT account_id FROM card_accounts where client_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, clientId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int accountId = resultSet.getInt("account_id");
+                    return accountId;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientId;
+    }
+
     public void insertObjectsToAccount() {
         String sql = "INSERT INTO account (balance, card_account_id) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Client client : OBJECTS) {
                 Account account = client.getCardAccounts().getAccountNumber();
                 statement.setString(1, String.valueOf(account.getBalance()));
-                statement.setInt(2, client.getId());
+                int num = getIdCardAccountId(client.getId());
+                statement.setInt(2, num);
                 statement.executeUpdate();
             }
             System.out.println("Insert accounts successful.");
