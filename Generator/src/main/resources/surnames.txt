@@ -6909,7 +6909,7 @@ Banha
 Banhudo
 Banica
 Banisch
-Bank
+entity.Bank
 Banker
 Banks
 Bannasch

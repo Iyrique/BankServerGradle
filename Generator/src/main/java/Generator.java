@@ -1,3 +1,5 @@
+import entity.*;
+
 import java.io.*;
 import java.util.*;
 
