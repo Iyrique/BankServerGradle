@@ -120,18 +120,20 @@ public class CardDAO extends AbstractDAO {
              ResultSet resultSet = statement.executeQuery()) {
             AccountDAO accountDAO = new AccountDAO(getConnection());
             ClientDAO clientDAO = new ClientDAO(getConnection());
-            CardAccountDAO cardAccountDAO = new CardAccountDAO(getConnection());
+            Client client;
             while (resultSet.next()) {
                 Card card = new Card();
-                Client client = clientDAO.readClientByName(resultSet.getString("person_name"),null,null,null);
-                card.setCardNumber(resultSet.getString("card_number"));
-                card.setCardPeriod(resultSet.getString("card_period"));
-                card.setPersonName(resultSet.getString("person_name"));
-                card.setCVV(resultSet.getString("cvv"));
-                card.setCodeForCheckCVV(resultSet.getString("code_for_cvv"));
-                card.setPIN(Integer.parseInt(resultSet.getString("pin")));
-                card.setAccount(accountDAO.findAccountByClientId(client.getId()));
-                cards.add(card);
+                client = clientDAO.readClientByName(resultSet.getString("person_name"),null,null,null);
+                if (client != null) {
+                    card.setCardNumber(resultSet.getString("card_number"));
+                    card.setCardPeriod(resultSet.getString("card_period"));
+                    card.setPersonName(resultSet.getString("person_name"));
+                    card.setCVV(resultSet.getString("cvv"));
+                    card.setCodeForCheckCVV(resultSet.getString("code_for_cvv"));
+                    card.setPIN(Integer.parseInt(resultSet.getString("pin")));
+                    card.setAccount(accountDAO.findAccountByClientId(client.getId()));
+                    cards.add(card);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

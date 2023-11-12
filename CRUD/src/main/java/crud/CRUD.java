@@ -3,6 +3,7 @@ package crud;
 import crud.dao.*;
 import entity.*;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -155,6 +156,58 @@ public class CRUD {
             System.out.println("Обновлено!");
         } else System.out.println("Клиента не существует!");
     }
+
+    public void updateCredit(int id) throws SQLException {
+        Credit credit = creditCRUD.readCreditById(id);
+        Scanner scanner = new Scanner(System.in);
+        if (credit != null) {
+            System.out.println("Введите сумму кредита: ");
+            credit.setSum(scanner.nextDouble());
+            System.out.println("Введите проценты: ");
+            credit.setPercent(scanner.nextDouble());
+            System.out.println("Введите размер ежемесячного платежа: ");
+            credit.setMonthlyPayment(scanner.nextDouble());
+            creditCRUD.updateCredit(credit);
+        } else System.out.println("Кредита нет");
+    }
+
+    public void updateDeposit(int id) throws SQLException {
+        Deposit deposit = depositCRUD.readDepositById(id);
+        Scanner scanner = new Scanner(System.in);
+        if (deposit != null) {
+            System.out.println("Введите сумму депозита: ");
+            deposit.setSum(scanner.nextDouble());
+            System.out.println("Введите проценты: ");
+            deposit.setPercent(scanner.nextDouble());
+            depositCRUD.updateDeposit(deposit);
+        } else System.out.println("Депозита нет!");
+    }
+
+    public void updateCardAccount(int id) throws SQLException {
+        Account account = accountCRUD.findAccountByClientId(id);
+        Client client = clientCRUD.readClientById(id, null, null, null);
+        Scanner scanner = new Scanner(System.in);
+        CardAccount cardAccount = null;
+        if (client.getCardAccounts().getCard() != null) {
+            cardAccount = cardAccountCRUD.readCardAccount(id, client, account, client.getCardAccounts().getCard());
+        }
+        if (cardAccount != null) {
+            System.out.println("Введите кодовое слово:");
+            cardAccount.setCodeWord(scanner.next());
+            cardAccountCRUD.updateCardAccount(cardAccount);
+        } else System.out.println("CardAccount null!");
+    }
+
+    public void updateAccount(int id) throws SQLException {
+        Account account = accountCRUD.findAccountByClientId(id);
+        Scanner scanner = new Scanner(System.in);
+        if (account != null) {
+            account.setBalance(scanner.nextDouble());
+            accountCRUD.updateAccount(account);
+        } else System.out.println("Account null!");
+    }
+
+
 
     public void deleteClient(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);

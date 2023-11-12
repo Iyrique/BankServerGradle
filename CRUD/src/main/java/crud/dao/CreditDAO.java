@@ -80,7 +80,7 @@ public class CreditDAO extends AbstractDAO {
 
 
     public void updateCredit(Credit credit) throws SQLException {
-        String sql = "UPDATE credits SET credit_sum = ?, credit_percent = ?, payment = ?,  WHERE credit_id = ?";
+        String sql = "UPDATE credits SET credit_sum = ?, credit_percent = ?, payment = ? WHERE credit_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, String.valueOf(credit.getSum()));
             statement.setString(2, String.valueOf(credit.getPercent()));

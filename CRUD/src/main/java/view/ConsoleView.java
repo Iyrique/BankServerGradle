@@ -175,31 +175,22 @@ public class ConsoleView implements View{
 
     @Override
     public void update() throws SQLException {
-        System.out.println("Что вы хотите обновить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет(Для выхода введите любое другое число))");
+        System.out.println("Что вы хотите обновить? (1. Клиента, 2. Кредит, 3. Депозит(Для выхода введите любое другое число))");
         int num = scanner.nextInt();
         switch (num) {
-            case 1:
+            case 1 -> {
                 System.out.println("Введите id пользователя: ");
                 crud.updateClient(scanner.nextInt());
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Введите id кредита: ");
-
-                break;
-            case 3:
+                crud.updateCredit(scanner.nextInt());
+            }
+            case 3 -> {
                 System.out.println("Введите id депозита: ");
-
-                break;
-            case 4:
-                System.out.println("Введите id договора счета: ");
-
-                break;
-            case 5:
-                System.out.println("Введите id счета: ");
-
-                break;
-            default:
-                System.out.println("Введено неверное число, попробуйте еще раз!");
+                crud.updateDeposit(scanner.nextInt());
+            }
+            default -> System.out.println("Введено неверное число, попробуйте еще раз!");
         }
     }
 
