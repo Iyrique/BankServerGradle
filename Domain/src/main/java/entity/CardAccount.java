@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CardAccount {
 
     @JsonIgnore
+    private int cardAccountId;
+    @JsonIgnore
     private int clientId;
     @JsonIgnore
     private String clientName;
@@ -21,14 +23,32 @@ public class CardAccount {
     public CardAccount() {
     }
 
-    public CardAccount(int clientId, String clientName, String birthday,
+    public CardAccount(int cardAccountId, int clientId, String clientName, String birthday,
                        Account accountNumber, String codeWord, Card card) {
+        this.cardAccountId = cardAccountId;
         this.clientId = clientId;
         this.clientName = clientName;
         this.birthday = birthday;
         this.accountNumber = accountNumber;
         this.codeWord = codeWord;
         this.cards = card;
+    }
+
+    public CardAccount(int clientId, String clientName, String birthday, Account accountNumber, String codeWord, Card cards) {
+        this.clientId = clientId;
+        this.clientName = clientName;
+        this.birthday = birthday;
+        this.accountNumber = accountNumber;
+        this.codeWord = codeWord;
+        this.cards = cards;
+    }
+
+    public int getCardAccountId() {
+        return cardAccountId;
+    }
+
+    public void setCardAccountId(int cardAccountId) {
+        this.cardAccountId = cardAccountId;
     }
 
     public int getClientId() {
@@ -83,5 +103,15 @@ public class CardAccount {
         this.codeWord = codeWord;
     }
 
-
+    @Override
+    public String toString() {
+        return "CardAccount{" +
+                "clientId=" + clientId +
+                ", clientName='" + clientName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", accountNumber=" + accountNumber +
+                ", codeWord='" + codeWord + '\'' +
+                ", cards=" + cards +
+                '}';
+    }
 }

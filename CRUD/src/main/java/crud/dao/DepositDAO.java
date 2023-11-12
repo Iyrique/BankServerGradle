@@ -27,6 +27,7 @@ public class DepositDAO extends AbstractDAO {
             statement.setBoolean(6, topUp);
             statement.setBoolean(7, withdraw);
             statement.executeUpdate();
+            System.out.println("Успешно!");
         }
     }
 

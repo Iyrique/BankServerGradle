@@ -134,4 +134,19 @@ public class Deposit {
 
     }
 
+    @Override
+    public String toString() {
+        return "Deposit{" +
+                "clientId=" + clientId +
+                ", clientName='" + clientName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", depositId=" + depositId +
+                ", sum=" + sum +
+                ", percent=" + percent +
+                ", period='" + period + '\'' +
+                ", requisites='" + requisites + '\'' +
+                ", abilityTopUp=" + abilityTopUp +
+                ", abilityWithdraw=" + abilityWithdraw +
+                '}';
+    }
 }

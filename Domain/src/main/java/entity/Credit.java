@@ -115,6 +115,19 @@ public class Credit {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Credit{" +
+                "creditId=" + creditId +
+                ", clientId=" + clientId +
+                ", clientName='" + clientName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", period='" + period + '\'' +
+                ", monthlyPayment=" + monthlyPayment +
+                ", percent=" + percent +
+                ", sum=" + sum +
+                ", requisites='" + requisites + '\'' +
+                '}';
+    }
 }
 

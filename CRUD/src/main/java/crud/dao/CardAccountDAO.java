@@ -18,12 +18,23 @@ public class CardAccountDAO extends AbstractDAO {
     }
 
     public void createCardAccount(int clientId) throws SQLException {
-        String sql = "INSERT INTO card_accounts (client_id, acc_number, code_word) VALUES (?,?,?)";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setInt(1, clientId);
-            statement.setString(2, String.valueOf(clientId));
-            statement.setString(3, "codeword");
-            statement.executeUpdate();
+        String sql = "SELECT COUNT(*) FROM card_accounts WHERE client_id = ?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(sql);
+        preparedStatement.setInt(1, clientId);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                if (count < 1) {
+                    sql = "INSERT INTO card_accounts (client_id, acc_number, code_word) VALUES (?,?,?)";
+                    try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+                        statement.setInt(1, clientId);
+                        statement.setString(2, String.valueOf(clientId));
+                        statement.setString(3, "codeword");
+                        statement.executeUpdate();
+                        System.out.println("Успешно");
+                    }
+                } else System.out.println("Больше создать нельзя!(");
+            }
         }
     }
 
@@ -33,7 +44,7 @@ public class CardAccountDAO extends AbstractDAO {
             statement.setInt(1, clientId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new CardAccount(clientId, client.getName(), client.getBirthday(), account, resultSet.getString("code_word"),
+                    return new CardAccount(resultSet.getInt("account_id"),clientId, client.getName(), client.getBirthday(), account, resultSet.getString("code_word"),
                             card);
                 } else {
                     return null;
@@ -76,7 +87,7 @@ public class CardAccountDAO extends AbstractDAO {
                 client = clientDAO.readClientById(resultSet.getInt("client_id"), null,null,null);
                 cardAccount.setClientName(client.getName());
                 cardAccount.setBirthday(client.getBirthday());
-                account = accountDAO.findAccountByCardAccountId(client.getId());
+                account = accountDAO.findAccountByClientId(client.getId());
                 cardAccount.setAccountNumber(account);
                 cardAccount.setCodeWord(resultSet.getString("code_word"));
                 cardAccount.setCards(cardDAO.findCardByClientId(client.getId(), account));

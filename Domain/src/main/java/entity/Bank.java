@@ -22,7 +22,7 @@ public class Bank {
     }
 
     public Bank() {
-
+        this.clients = new ArrayList<>();
     }
 
     public List<Client> getClients() {
@@ -35,6 +35,15 @@ public class Bank {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "clients=" + clients +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public void setClients(List<Client> clients) {

@@ -33,4 +33,12 @@ public class Account {
     public int getCardAccId() {
         return cardAccId;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "cardAccId=" + cardAccId +
+                ", balance=" + balance +
+                '}';
+    }
 }

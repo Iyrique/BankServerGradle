@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,19 +19,10 @@ public class Client {
     @JsonProperty("cardAccount")
     private CardAccount cardAccounts; //Договоры, по карточным счетам
 
-    @Override
-    public String toString() {
-        return "entity.Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", credits=" + credits +
-                ", deposits=" + deposits +
-                ", cardAccounts=" + cardAccounts +
-                '}';
-    }
-
     public Client() {
+        credits = new ArrayList<>();
+        deposits = new ArrayList<>();
+        cardAccounts = new CardAccount();
     }
 
     public Client(int id, String name, String birthday, List<Credit> credits,
@@ -111,4 +103,15 @@ public class Client {
 
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", credits=" + credits +
+                ", deposits=" + deposits +
+                ", cardAccounts=" + cardAccounts +
+                '}';
+    }
 }

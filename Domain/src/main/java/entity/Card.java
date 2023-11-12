@@ -98,4 +98,17 @@ public class Card {
     public void withdrawMoney(double sum) {
 
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", cardPeriod='" + cardPeriod + '\'' +
+                ", personName='" + personName + '\'' +
+                ", CVV='" + CVV + '\'' +
+                ", codeForCheckCVV='" + codeForCheckCVV + '\'' +
+                ", PIN=" + PIN +
+                ", account=" + account +
+                '}';
+    }
 }

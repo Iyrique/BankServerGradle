@@ -25,6 +25,7 @@ public class CreditDAO extends AbstractDAO {
             statement.setString(5, period);
             statement.setString(6, requisites);
             statement.executeUpdate();
+            System.out.println("Добавление успешно!");
         }
     }
 

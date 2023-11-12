@@ -12,39 +12,201 @@ public class ConsoleView implements View{
 
     private final Scanner scanner = new Scanner(System.in);
 
+    private CRUD crud;
+
     @Override
     public void displayMenu() throws SQLException {
         Connection connection = ConnectDB.connector();
-        CRUD crud = new CRUD(connection);
+        crud = new CRUD(connection);
+        outer:
         while (true) {
-
-            break;
+            System.out.println("Выберите действие (1 - Добавить, 2 - прочитать что-то конкретное, 3 - обновить, 4 - удалить, 5 - прочитать все, 6 - отключиться):");
+            int num = scanner.nextInt();
+            switch (num) {
+                case 1:
+                    create();
+                    break;
+                case 2:
+                    read();
+                    break;
+                case 3:
+                    update();
+                    break;
+                case 4:
+                    delete();
+                    break;
+                case 5:
+                    readAll();
+                    break;
+                case 6:
+                    break outer;
+                default:
+                    System.out.println("Введено неверное число, попробуйте еще раз!");
+            }
         }
         connection.close();
     }
 
     @Override
     public void create() throws SQLException {
-
+        System.out.println("Кого вы хотите добавить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет, 6. Карту (Для выхода нажмите на любое другое число)");
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1:
+                System.out.println("Введите фамилию имя клиента:");
+                String name = scanner.next();
+                String surname = scanner.next();
+                name = name + " " + surname;
+                System.out.println("Введенное имя: " + name);
+                System.out.println("Введите дату рождения клиента (ДД.ММ.ГГГГ):");
+                String birthday = scanner.next();
+                crud.createClient(name, birthday);
+                break;
+            case 2:
+                System.out.println("Введите id клиента:");
+                int id = scanner.nextInt();
+                System.out.println("Введите сумму кредита клиента:");
+                double sum = scanner.nextDouble();
+                System.out.println("Введите проценты кредита клиента:");
+                double percent = scanner.nextDouble();
+                System.out.println("Введите ежемесячный платеж: ");
+                double payment = scanner.nextDouble();
+                System.out.println("Введите срок кредита (ДД.ММ.ГГГГ): ");
+                String period = scanner.next();
+                crud.createCredit(id, sum, percent, payment, period);
+                break;
+            case 3:
+                System.out.println("Введите id клиента:");
+                id = scanner.nextInt();
+                System.out.println("Введите сумму депозита клиента:");
+                sum = scanner.nextDouble();
+                System.out.println("Введите проценты депозита клиента:");
+                percent = scanner.nextDouble();
+                System.out.println("Введите срок кредита (ДД.ММ.ГГГГ): ");
+                period = scanner.next();
+                System.out.println("Возможность пополнения (Yes/No): ");
+                String topUp = scanner.next();
+                boolean top = topUp.contains("Yes");
+                System.out.println("Возможность снятия (Yes/No): ");
+                String withdraw = scanner.next();
+                boolean w = withdraw.contains("Yes");
+                crud.createDeposit(id, sum, percent, period, top, w);
+                break;
+            case 4:
+                System.out.println("Введите id клиента:");
+                id = scanner.nextInt();
+                crud.createCardAccount(id);
+                break;
+            case 5:
+                System.out.println("Введите id клиента:");
+                id = scanner.nextInt();
+                crud.createAccount(id);
+                break;
+            case 6:
+                System.out.println("Введите id клиента:");
+                id = scanner.nextInt();
+                crud.createCard(id);
+                break;
+            default:
+                System.out.println("Введено неверное число, попробуйте еще раз!");
+        }
     }
 
     @Override
     public void read() throws SQLException {
 
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+                break;
+            default:
+                System.out.println("Введено неверное число, попробуйте еще раз!");
+        }
+
     }
 
     @Override
     public void update() throws SQLException {
+        System.out.println("Что вы хотите обновить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет, 6. Карту (Для выхода введите любое другое число))");
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1:
 
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+                break;
+            default:
+                System.out.println("Введено неверное число, попробуйте еще раз!");
+        }
     }
 
     @Override
     public void delete() throws SQLException {
 
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+            case 6:
+                break;
+            default:
+                System.out.println("Введено неверное число, попробуйте еще раз!");
+        }
     }
 
     @Override
     public void readAll() throws SQLException {
-
+        System.out.println("Что вы хотите прочитать? (1.Account, 2. Bank, 3. CardAccount, 4. Card, 5. Client, 6. Credit, 7. Deposit)");
+        int num = scanner.nextInt();
+        switch (num) {
+            case 1 -> crud.getAllAccounts();
+            case 2 -> crud.getAllBanks();
+            case 3 -> crud.getAllCardAccounts();
+            case 4 -> crud.getAllCards();
+            case 5 -> crud.getAllClients();
+            case 6 -> crud.getAllCredits();
+            case 7 -> crud.getAllDeposits();
+            default -> System.out.println("Введено неверное число, попробуйте еще раз!");
+        }
     }
 }

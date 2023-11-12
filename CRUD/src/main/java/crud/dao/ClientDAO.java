@@ -22,6 +22,7 @@ public class ClientDAO extends AbstractDAO {
             statement.setString(2, name);
             statement.setString(3, birthday);
             statement.executeUpdate();
+            System.out.println("Добавление успешно!");
         }
     }
 
@@ -89,7 +90,7 @@ public class ClientDAO extends AbstractDAO {
                 client.setBirthday(resultSet.getString("birthday"));
                 client.setCredits(creditDAO.readCreditsByClientId(client));
                 client.setDeposits(depositDAO.readDepositsByClientId(client));
-                Account account = accountDAO.findAccountByCardAccountId(client.getId());
+                Account account = accountDAO.findAccountByClientId(client.getId());
                 client.setCardAccounts(cardAccountDAO.readCardAccount(client.getId(), client,
                         account, cardDAO.findCardByClientId(client.getId(), account)));
                 clients.add(client);

@@ -25,14 +25,19 @@ public class CardDAO extends AbstractDAO {
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
                 if (count < 1) {
-                    sql = "INSERT INTO cards (client_id, card_number, person_name) VALUES (?,?,?)";
+                    sql = "INSERT INTO cards (client_id, card_number, card_period, person_name, cvv, code_for_cvv, pin) VALUES (?,?,?,?,?,?,?)";
                     try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
                         statement.setInt(1, client.getId());
                         statement.setString(2, cardNumber);
-                        statement.setString(3, client.getName());
+                        statement.setString(3, "2032");
+                        statement.setString(4, client.getName());
+                        statement.setString(5, "CVV");
+                        statement.setString(6, "code");
+                        statement.setInt(7, 123);
                         statement.executeUpdate();
+                        System.out.println("Успешно!");
                     }
-                }
+                } else System.out.println("Больше нельзя!");
             }
         }
     }
@@ -115,15 +120,17 @@ public class CardDAO extends AbstractDAO {
              ResultSet resultSet = statement.executeQuery()) {
             AccountDAO accountDAO = new AccountDAO(getConnection());
             ClientDAO clientDAO = new ClientDAO(getConnection());
+            CardAccountDAO cardAccountDAO = new CardAccountDAO(getConnection());
             while (resultSet.next()) {
                 Card card = new Card();
+                Client client = clientDAO.readClientByName(resultSet.getString("person_name"),null,null,null);
                 card.setCardNumber(resultSet.getString("card_number"));
                 card.setCardPeriod(resultSet.getString("card_period"));
                 card.setPersonName(resultSet.getString("person_name"));
                 card.setCVV(resultSet.getString("cvv"));
                 card.setCodeForCheckCVV(resultSet.getString("code_for_cvv"));
                 card.setPIN(Integer.parseInt(resultSet.getString("pin")));
-                card.setAccount(accountDAO.findAccountByCardAccountId(clientDAO.readClientByName(resultSet.getString("person_name"), null, null, null).getId()));
+                card.setAccount(accountDAO.findAccountByClientId(client.getId()));
                 cards.add(card);
             }
         } catch (SQLException e) {

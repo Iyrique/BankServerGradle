@@ -1,7 +1,6 @@
 package crud.dao;
 
 import entity.Account;
-import entity.Client;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,24 +28,37 @@ public class AccountDAO extends AbstractDAO {
                         statement.setString(1, "0");
                         statement.setInt(2, cardAccountId);
                         statement.executeUpdate();
+                        System.out.println("Успешно");
                     }
-                }
+                } else System.out.println("Уже существует! Больше нельзя");
             }
         }
     }
 
-    public Account findAccountByCardAccountId(int cardAccountId) throws SQLException {
-        String sql = "SELECT * FROM account WHERE card_account_id = ?";
+    public Account findAccountByClientId(int clientId) throws SQLException {
+        String sql = "SELECT * FROM card_accounts WHERE client_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setInt(1, cardAccountId);
+            statement.setInt(1, clientId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new Account(cardAccountId, Double.parseDouble(resultSet.getString("balance")));
+                    int accId = resultSet.getInt("account_id");
+                    sql = "SELECT * FROM account WHERE card_account_id = ?";
+                    try (PreparedStatement statement1 = getConnection().prepareStatement(sql);){
+                        statement1.setInt(1, accId);
+                        try (ResultSet resultSet1 = statement1.executeQuery();){
+                            if (resultSet1.next()) {
+                                return new Account(accId, Double.parseDouble(resultSet1.getString("balance")));
+                            }
+
+                        }
+                    }
+
                 } else {
                     return null;
                 }
             }
         }
+        return null;
     }
 
     public void updateAccount(Account account) throws SQLException {
