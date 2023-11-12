@@ -13,6 +13,8 @@ public class Deposit {
     private String clientName;
     @JsonIgnore
     private String birthday;
+    @JsonIgnore
+    private int depositId;
     @JsonProperty("sum")
     private double sum;
     @JsonProperty("percent")
@@ -42,6 +44,10 @@ public class Deposit {
     }
 
     public Deposit() {
+    }
+
+    public void setDepositId(int depositId) {
+        this.depositId = depositId;
     }
 
     public void setClientName(String clientName) {
@@ -78,6 +84,10 @@ public class Deposit {
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
+    }
+
+    public int getDepositId() {
+        return depositId;
     }
 
     public double getSum() {

@@ -1,8 +1,5 @@
-import connection.ConnectDB;
-import crud.CRUD;
 import view.ConsoleView;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConsoleMain {

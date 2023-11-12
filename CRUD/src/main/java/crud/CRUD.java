@@ -1,8 +1,10 @@
 package crud;
 
 import crud.dao.*;
+import entity.Bank;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class CRUD{
 
@@ -24,6 +26,11 @@ public class CRUD{
         this.depositCRUD = new DepositDAO(connection);
     }
 
-
+    public void getAllBanks() {
+        List<Bank> banks = bankCRUD.getAll();
+        for (Bank bank: banks) {
+            System.out.print("Название банка: " + bank.getName() + ", id: " + bank.getId() + ", num_clients: " + bank.getClients().size());
+        }
+    }
 
 }

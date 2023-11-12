@@ -59,6 +59,18 @@ public class CardAccount {
         cards = new Card(num, per, clientName, CVV, code, pin, cardAccId);
     }
 
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setAccountNumber(Account accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setCards(Card cards) {
+        this.cards = cards;
+    }
+
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
@@ -71,12 +83,5 @@ public class CardAccount {
         this.codeWord = codeWord;
     }
 
-    public void closeCard(int numberCard) {
-
-    }
-
-    public void openCard(int cardNumber, String period) {
-
-    }
 
 }

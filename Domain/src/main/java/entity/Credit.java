@@ -3,15 +3,15 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class Credit {
 
-    @JsonIgnore()
+    @JsonIgnore
+    private int creditId;
+    @JsonIgnore
     private int clientId;
-    @JsonIgnore()
+    @JsonIgnore
     private String clientName;
-    @JsonIgnore()
+    @JsonIgnore
     private String birthday;
     @JsonProperty("period")
     private String period;
@@ -38,6 +38,10 @@ public class Credit {
         this.percent = percent;
         this.sum = sum;
         this.requisites = requisites;
+    }
+
+    public int getCreditId() {
+        return creditId;
     }
 
     public String getRequisites() {
@@ -70,6 +74,10 @@ public class Credit {
 
     public double getSum() {
         return sum;
+    }
+
+    public void setCreditId(int creditId) {
+        this.creditId = creditId;
     }
 
     public void setPercent(double percent) {

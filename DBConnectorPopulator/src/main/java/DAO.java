@@ -38,23 +38,6 @@ public class DAO {
         }
     }
 
-    public void getAllBanks() {
-        String sql = "SELECT * FROM bank";
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-            List<Bank> banks = new ArrayList<>();
-            while (resultSet.next()) {
-                Bank bank = new Bank();
-                bank.setId(resultSet.getInt("bank_id"));
-                bank.setName(resultSet.getString("bank_name"));
-                banks.add(bank);
-            }
-            banks.forEach(System.out::println);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void insertObjectsToClients() throws IOException {
         String sql = "INSERT INTO clients (client_id, bank_id, client_name, birthday) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
