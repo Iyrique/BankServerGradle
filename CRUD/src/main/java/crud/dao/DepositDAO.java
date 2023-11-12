@@ -86,6 +86,7 @@ public class DepositDAO extends AbstractDAO {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+            System.out.println("Депозит удален!");
         }
     }
 

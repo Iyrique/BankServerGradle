@@ -175,25 +175,28 @@ public class ConsoleView implements View{
 
     @Override
     public void update() throws SQLException {
-        System.out.println("Что вы хотите обновить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет, 6. Карту (Для выхода введите любое другое число))");
+        System.out.println("Что вы хотите обновить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет(Для выхода введите любое другое число))");
         int num = scanner.nextInt();
         switch (num) {
             case 1:
-
+                System.out.println("Введите id пользователя: ");
+                crud.updateClient(scanner.nextInt());
                 break;
             case 2:
+                System.out.println("Введите id кредита: ");
 
                 break;
             case 3:
+                System.out.println("Введите id депозита: ");
 
                 break;
             case 4:
+                System.out.println("Введите id договора счета: ");
 
                 break;
             case 5:
+                System.out.println("Введите id счета: ");
 
-                break;
-            case 6:
                 break;
             default:
                 System.out.println("Введено неверное число, попробуйте еще раз!");
@@ -202,25 +205,32 @@ public class ConsoleView implements View{
 
     @Override
     public void delete() throws SQLException {
-
+        System.out.println("Что вы хотите удалить? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет, 6.Карту(Для выхода введите любое другое число))");
         int num = scanner.nextInt();
         switch (num) {
             case 1:
-
+                System.out.println("Введите id пользователя: ");
+                crud.deleteClient(scanner.nextInt());
                 break;
             case 2:
-
+                System.out.println("Введите id кредита: ");
+                crud.deleteCredit(scanner.nextInt());
                 break;
             case 3:
-
+                System.out.println("Введите id депозита: ");
+                crud.deleteDeposit(scanner.nextInt());
                 break;
             case 4:
-
+                System.out.println("Введите id клиента для удаления договора счета: ");
+                crud.deleteCardAccount(scanner.nextInt());
                 break;
             case 5:
-
+                System.out.println("Введите id клиента для удаления счета: ");
+                crud.deleteAccount(scanner.nextInt());
                 break;
             case 6:
+                System.out.println("Введите id клиента для удаления карты");
+                crud.deleteCard(scanner.nextInt());
                 break;
             default:
                 System.out.println("Введено неверное число, попробуйте еще раз!");

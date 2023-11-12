@@ -59,12 +59,17 @@ public class ClientDAO extends AbstractDAO {
     }
 
 
-    public void deleteClient(int id) {
-
+    public void deleteClient(int id) throws SQLException {
+        String sql = "DELETE FROM clients WHERE client_id = ?";
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            System.out.println("Клиент удален!");
+        }
     }
 
     public void updateClient(Client client) throws SQLException {
-        String sql = "UPDATE clients SET name = ? WHERE client_id = ?";
+        String sql = "UPDATE clients SET client_name = ? WHERE client_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, client.getName());
             statement.setInt(2, client.getId());

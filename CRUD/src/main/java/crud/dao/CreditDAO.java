@@ -70,7 +70,7 @@ public class CreditDAO extends AbstractDAO {
                             Double.parseDouble(resultSet.getString("credit_percent")),
                             Double.parseDouble(resultSet.getString("credit_sum")),
                             resultSet.getString("requisites"));
-                    credit.setCreditId(client.getId());
+                    credit.setCreditId(resultSet.getInt("credit_id"));
                     credits.add(credit);
                 }
             }
@@ -96,6 +96,7 @@ public class CreditDAO extends AbstractDAO {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+            System.out.println("Кредит удален!");
         }
     }
 
