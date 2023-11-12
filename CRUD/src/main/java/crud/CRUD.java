@@ -120,6 +120,22 @@ public class CRUD{
         }
     }
 
+    public void readCardAccount(int clientId) throws SQLException {
+        Account account = accountCRUD.findAccountByClientId(clientId);
+        Client client = clientCRUD.readClientById(clientId, null, null, null);
+        System.out.println(cardAccountCRUD.readCardAccount(clientId, client, account, cardCRUD.findCardByClientId(clientId,
+                accountCRUD.findAccountByClientId(clientId))).toString());
+    }
+
+    public void readAccount(int clientId) throws SQLException {
+        Account account = accountCRUD.findAccountByClientId(clientId);
+        System.out.println(account.toString());
+    }
+
+    public void readCard(int clientId) throws SQLException {
+        System.out.println(cardCRUD.findCardByClientId(clientId, accountCRUD.findAccountByClientId(clientId)).toString());
+    }
+
     public void getAllBanks() {
         List<Bank> banks = bankCRUD.getAll();
         for (Bank bank: banks) {

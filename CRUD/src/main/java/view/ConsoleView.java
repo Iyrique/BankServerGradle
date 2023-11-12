@@ -153,12 +153,19 @@ public class ConsoleView implements View{
                 }
                 break;
             case 4:
-
+                System.out.println("Введите id клиента для получения договора счета:");
+                choose = scanner.nextInt();
+                crud.readCardAccount(choose);
                 break;
             case 5:
-
+                System.out.println("Введите id клиента для получения счета:");
+                choose = scanner.nextInt();
+                crud.readAccount(choose);
                 break;
             case 6:
+                System.out.println("Введите id клиента для получения карты:");
+                choose = scanner.nextInt();
+                crud.readCard(choose);
                 break;
             default:
                 System.out.println("Введено неверное число, попробуйте еще раз!");
