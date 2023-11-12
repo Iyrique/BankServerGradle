@@ -21,10 +21,12 @@ public class BankDAO extends AbstractDAO {
         List<Bank> banks = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
+            ClientDAO clientDAO = new ClientDAO(getConnection());
             while (resultSet.next()) {
                 Bank bank = new Bank();
                 bank.setId(resultSet.getInt("bank_id"));
                 bank.setName(resultSet.getString("bank_name"));
+                bank.setClients(clientDAO.getAll());
                 banks.add(bank);
             }
         } catch (SQLException e) {

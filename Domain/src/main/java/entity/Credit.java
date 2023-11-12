@@ -21,7 +21,6 @@ public class Credit {
     private double percent;
     @JsonProperty("sum")
     private double sum;
-
     @JsonProperty("requisites")
     private String requisites;
 

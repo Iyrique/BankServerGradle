@@ -77,11 +77,21 @@ public class ClientDAO extends AbstractDAO {
         List<Client> clients = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
+            CreditDAO creditDAO = new CreditDAO(getConnection());
+            DepositDAO depositDAO = new DepositDAO(getConnection());
+            CardAccountDAO cardAccountDAO = new CardAccountDAO(getConnection());
+            CardDAO cardDAO = new CardDAO(getConnection());
+            AccountDAO accountDAO = new AccountDAO(getConnection());
             while (resultSet.next()) {
                 Client client = new Client();
                 client.setId(resultSet.getInt("client_id"));
                 client.setName(resultSet.getString("client_name"));
                 client.setBirthday(resultSet.getString("birthday"));
+                client.setCredits(creditDAO.readCreditsByClientId(client));
+                client.setDeposits(depositDAO.readDepositsByClientId(client));
+                Account account = accountDAO.findAccountByCardAccountId(client.getId());
+                client.setCardAccounts(cardAccountDAO.readCardAccount(client.getId(), client,
+                        account, cardDAO.findCardByClientId(client.getId(), account)));
                 clients.add(client);
             }
         } catch (SQLException e) {

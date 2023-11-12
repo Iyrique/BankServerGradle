@@ -113,6 +113,8 @@ public class CardDAO extends AbstractDAO {
         List<Card> cards = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
+            AccountDAO accountDAO = new AccountDAO(getConnection());
+            ClientDAO clientDAO = new ClientDAO(getConnection());
             while (resultSet.next()) {
                 Card card = new Card();
                 card.setCardNumber(resultSet.getString("card_number"));
@@ -121,6 +123,7 @@ public class CardDAO extends AbstractDAO {
                 card.setCVV(resultSet.getString("cvv"));
                 card.setCodeForCheckCVV(resultSet.getString("code_for_cvv"));
                 card.setPIN(Integer.parseInt(resultSet.getString("pin")));
+                card.setAccount(accountDAO.findAccountByCardAccountId(clientDAO.readClientByName(resultSet.getString("person_name"), null, null, null).getId()));
                 cards.add(card);
             }
         } catch (SQLException e) {

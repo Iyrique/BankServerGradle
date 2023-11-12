@@ -90,9 +90,15 @@ public class DepositDAO extends AbstractDAO {
         List<Deposit> deposits = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
+            ClientDAO clientDAO = new ClientDAO(getConnection());
+            Client client;
             while (resultSet.next()) {
                 Deposit deposit = new Deposit();
+                deposit.setDepositId(resultSet.getInt("dep_id"));
                 deposit.setClientId(resultSet.getInt("cl_id"));
+                client = clientDAO.readClientById(deposit.getClientId(), null,null,null);
+                deposit.setClientName(client.getName());
+                deposit.setBirthday(client.getBirthday());
                 deposit.setSum(Double.parseDouble(resultSet.getString("sum")));
                 deposit.setPercent(Double.parseDouble(resultSet.getString("percent")));
                 deposit.setPeriod(resultSet.getString("period"));

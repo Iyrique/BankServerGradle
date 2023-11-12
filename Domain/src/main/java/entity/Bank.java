@@ -37,6 +37,10 @@ public class Bank {
         this.name = name;
     }
 
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

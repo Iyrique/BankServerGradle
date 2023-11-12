@@ -99,9 +99,15 @@ public class CreditDAO extends AbstractDAO {
         List<Credit> credits = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
+            ClientDAO clientDAO = new ClientDAO(getConnection());
+            Client client;
             while (resultSet.next()) {
                 Credit credit = new Credit();
+                credit.setCreditId(resultSet.getInt("credit_id"));
                 credit.setClientId(resultSet.getInt("client_id"));
+                client = clientDAO.readClientById(credit.getClientId(), null,null,null);
+                credit.setClientName(client.getName());
+                credit.setBirthday(client.getBirthday());
                 credit.setSum(Double.parseDouble(resultSet.getString("credit_sum")));
                 credit.setPercent(Double.parseDouble(resultSet.getString("credit_percent")));
                 credit.setMonthlyPayment(Double.parseDouble(resultSet.getString("payment")));
