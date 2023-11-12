@@ -5,6 +5,7 @@ import entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -62,8 +63,8 @@ public class CRUD{
     public void readClientById(int id) throws SQLException {
         Client client = clientCRUD.readClientById(id, null, null, null);
         if (client != null) {
-            client.setCredits(creditCRUD.readCreditsByClientId(client));
-            client.setDeposits(depositCRUD.readDepositsByClientId(client));
+            client.setCredits(creditCRUD.readCreditsByClientId(client.getId()));
+            client.setDeposits(depositCRUD.readDepositsByClientId(client.getId()));
             client.setCardAccounts(cardAccountCRUD.readCardAccount(id, client, accountCRUD.findAccountByClientId(id),
                     cardCRUD.findCardByClientId(id,accountCRUD.findAccountByClientId(id))));
             System.out.println(client.toString());
@@ -73,18 +74,51 @@ public class CRUD{
     public void readClientByName(String name) throws SQLException {
         Client client = clientCRUD.readClientByName(name, null, null, null);
         if (client != null) {
-            client.setCredits(creditCRUD.readCreditsByClientId(client));
-            client.setDeposits(depositCRUD.readDepositsByClientId(client));
+            client.setCredits(creditCRUD.readCreditsByClientId(client.getId()));
+            client.setDeposits(depositCRUD.readDepositsByClientId(client.getId()));
             client.setCardAccounts(cardAccountCRUD.readCardAccount(client.getId(),client,accountCRUD.findAccountByClientId(client.getId()),
                     cardCRUD.findCardByClientName(name, accountCRUD.findAccountByClientId(client.getId()))));
             System.out.println(client.toString());
         } else System.out.println("Клиента не существует!");
     }
 
-    public void readCreditById() {
-
+    public void readCreditById(int creditId) throws SQLException {
+        Credit credit = creditCRUD.readCreditById(creditId);
+        if (credit != null) {
+            System.out.println(credit.toString());
+        } else System.out.println("Кредита не существует!");
     }
 
+    public void readCreditsById(int clientId) throws SQLException {
+        List<Credit> credits = new ArrayList<>();
+        credits = creditCRUD.readCreditsByClientId(clientId);
+        if (credits.isEmpty()) {
+            System.out.println("Кредитов нет!");
+        } else {
+            for (Credit credit : credits) {
+                System.out.println(credit.toString());
+            }
+        }
+    }
+
+    public void readDepositById(int depositId) throws SQLException {
+        Deposit deposit = depositCRUD.readDepositById(depositId);
+        if (deposit != null) {
+            System.out.println(deposit.toString());
+        } else System.out.println("Не существует!");
+    }
+
+    public void readDepositsById(int clientId) throws SQLException {
+        List<Deposit> deposits = new ArrayList<>();
+        deposits = depositCRUD.readDepositsByClientId(clientId);
+        if (deposits.isEmpty()) {
+            System.out.println("Депозитов нет!");
+        } else {
+            for (Deposit deposit : deposits) {
+                System.out.println(deposit.toString());
+            }
+        }
+    }
 
     public void getAllBanks() {
         List<Bank> banks = bankCRUD.getAll();

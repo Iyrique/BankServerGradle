@@ -30,13 +30,16 @@ public class CreditDAO extends AbstractDAO {
     }
 
 
-    public Credit readCreditById(int id, Client client) throws SQLException {
+    public Credit readCreditById(int id) throws SQLException {
         String sql = "SELECT * FROM credits WHERE credit_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
+                ClientDAO clientDAO = new ClientDAO(getConnection());
                 if (resultSet.next()) {
-                    Credit credit = new Credit(client.getId(), client.getName(), client.getBirthday(),
+                    int clientId = resultSet.getInt("client_id");
+                    Client client = clientDAO.readClientById(clientId, null, null, null);
+                    Credit credit = new Credit(clientId, client.getName(), client.getBirthday(),
                             resultSet.getString("period"),
                             Double.parseDouble(resultSet.getString("payment")),
                             Double.parseDouble(resultSet.getString("credit_percent")),
@@ -52,13 +55,15 @@ public class CreditDAO extends AbstractDAO {
     }
 
 
-    public List<Credit> readCreditsByClientId(Client client) throws SQLException {
+    public List<Credit> readCreditsByClientId(int clientId) throws SQLException {
         String sql = "SELECT * FROM credits WHERE client_id = ?";
         List<Credit> credits = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setInt(1, client.getId());
+            statement.setInt(1, clientId);
+            ClientDAO clientDAO = new ClientDAO(getConnection());
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
+                    Client client = clientDAO.readClientById(clientId, null, null, null);
                     Credit credit = new Credit(client.getId(), client.getName(), client.getBirthday(),
                             resultSet.getString("period"),
                             Double.parseDouble(resultSet.getString("payment")),

@@ -88,8 +88,8 @@ public class ClientDAO extends AbstractDAO {
                 client.setId(resultSet.getInt("client_id"));
                 client.setName(resultSet.getString("client_name"));
                 client.setBirthday(resultSet.getString("birthday"));
-                client.setCredits(creditDAO.readCreditsByClientId(client));
-                client.setDeposits(depositDAO.readDepositsByClientId(client));
+                client.setCredits(creditDAO.readCreditsByClientId(client.getId()));
+                client.setDeposits(depositDAO.readDepositsByClientId(client.getId()));
                 Account account = accountDAO.findAccountByClientId(client.getId());
                 client.setCardAccounts(cardAccountDAO.readCardAccount(client.getId(), client,
                         account, cardDAO.findCardByClientId(client.getId(), account)));

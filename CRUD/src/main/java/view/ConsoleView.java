@@ -114,17 +114,43 @@ public class ConsoleView implements View{
 
     @Override
     public void read() throws SQLException {
-
+        System.out.println("Кого вы хотите найти? (1. Клиента, 2. Кредит, 3. Депозит, 4. Договор счета, 5. Счет, 6. Карту (Для выхода нажмите на любое другое число)");
         int num = scanner.nextInt();
         switch (num) {
             case 1:
-
+                System.out.println("Что вы будете вводить, имя и фамилию или id пользователя? (1. имя, 2. id)");
+                int choose = scanner.nextInt();
+                if (choose == 1) {
+                    System.out.println("Введите имя и фамилию: ");
+                    String name = scanner.next();
+                    name = name + " " + scanner.next();
+                    crud.readClientByName(name);
+                } else if (choose == 2) {
+                    System.out.println("Введите id клиента: ");
+                    crud.readClientById(scanner.nextInt());
+                }
                 break;
             case 2:
-
+                System.out.println("1. Получить все кредиты человека, 2. Получить конкретный кредит: ");
+                choose = scanner.nextInt();
+                if (choose == 1) {
+                    System.out.println("Введите id клиента: ");
+                    crud.readCreditsById(scanner.nextInt());
+                } else if (choose == 2) {
+                    System.out.println("Введите id кредита: ");
+                    crud.readCreditById(scanner.nextInt());
+                }
                 break;
             case 3:
-
+                System.out.println("1. Получить все депозиты человека, 2. Получить конкретный депозит: ");
+                choose = scanner.nextInt();
+                if (choose == 1) {
+                    System.out.println("Введите id клиента: ");
+                    crud.readDepositsById(scanner.nextInt());
+                } else if (choose == 2) {
+                    System.out.println("Введите id депозита: ");
+                    crud.readDepositById(scanner.nextInt());
+                }
                 break;
             case 4:
 

@@ -31,12 +31,14 @@ public class DepositDAO extends AbstractDAO {
         }
     }
 
-    public Deposit readDepositById(int id, Client client) throws SQLException {
+    public Deposit readDepositById(int id) throws SQLException {
         String sql = "SELECT * FROM deposits WHERE dep_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
+                ClientDAO clientDAO = new ClientDAO(getConnection());
                 if (resultSet.next()) {
+                    Client client = clientDAO.readClientById(resultSet.getInt("cl_id"), null, null, null);
                     Deposit deposit = new Deposit(client.getId(), client.getName(), client.getBirthday(), Double.parseDouble(resultSet.getString("sum")),
                             Double.parseDouble(resultSet.getString("percent")), resultSet.getString("period"),
                             resultSet.getString("requisites"), resultSet.getBoolean("top_up"), resultSet.getBoolean("withdraw"));
@@ -49,13 +51,15 @@ public class DepositDAO extends AbstractDAO {
         }
     }
 
-    public List<Deposit> readDepositsByClientId(Client client) throws SQLException {
+    public List<Deposit> readDepositsByClientId(int clientId) throws SQLException {
         String sql = "SELECT * FROM deposits WHERE cl_id = ?";
         List<Deposit> deposits = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
-            statement.setInt(1, client.getId());
+            statement.setInt(1, clientId);
+            ClientDAO clientDAO = new ClientDAO(getConnection());
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
+                    Client client = clientDAO.readClientById(clientId, null, null, null);
                     Deposit deposit = new Deposit(client.getId(), client.getName(), client.getBirthday(), Double.parseDouble(resultSet.getString("sum")),
                             Double.parseDouble(resultSet.getString("percent")), resultSet.getString("period"),
                             resultSet.getString("requisites"), resultSet.getBoolean("top_up"), resultSet.getBoolean("withdraw"));
