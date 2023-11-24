@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class CRUD {
+public class ConsoleCRUD {
 
     private AccountDAO accountCRUD;
     private BankDAO bankCRUD;
@@ -21,7 +21,7 @@ public class CRUD {
     private CreditDAO creditCRUD;
     private DepositDAO depositCRUD;
 
-    public CRUD(Connection connection) {
+    public ConsoleCRUD(Connection connection) {
         this.accountCRUD = new AccountDAO(connection);
         this.bankCRUD = new BankDAO(connection);
         this.cardAccountCRUD = new CardAccountDAO(connection);

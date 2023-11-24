@@ -1,7 +1,7 @@
 package view;
 
 import connection.ConnectDB;
-import crud.CRUD;
+import crud.ConsoleCRUD;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,12 +12,12 @@ public class ConsoleView implements View{
 
     private final Scanner scanner = new Scanner(System.in);
 
-    private CRUD crud;
+    private ConsoleCRUD crud;
 
     @Override
     public void displayMenu() throws SQLException {
         Connection connection = ConnectDB.connector();
-        crud = new CRUD(connection);
+        crud = new ConsoleCRUD(connection);
         outer:
         while (true) {
             System.out.println("Выберите действие (1 - Добавить, 2 - прочитать что-то конкретное, 3 - обновить, 4 - удалить, 5 - прочитать все, 6 - отключиться):");
