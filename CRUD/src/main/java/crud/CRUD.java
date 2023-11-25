@@ -218,8 +218,9 @@ public class CRUD {
         return true;
     }
 
-    public void deleteCard(int clientId) throws SQLException {
+    public boolean deleteCard(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);
+        return true;
     }
 
     public List<Bank> getAllBanks() {
