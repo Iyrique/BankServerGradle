@@ -101,7 +101,38 @@ public class ClientsServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
+        String pathInfo = req.getPathInfo();
+        if (pathInfo != null) {
+            String[] pathParts = pathInfo.split("/");
+            if (pathParts.length > 1 && "update".equals(pathParts[1])) {
+                int id = Integer.parseInt(pathParts[2]);
+                try {
+                    updatePersonById(id, req, resp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                resp.getWriter().write("Invalid path for PUT request.");
+            }
+        } else {
+            resp.getWriter().write("Path not specified for PUT request.");
+        }
+    }
+
+    private void updatePersonById(int id, HttpServletRequest req, HttpServletResponse response) throws IOException, SQLException {
+        PrintWriter writer = response.getWriter();
+        Client client = crud.readClientById(id);
+        if (client != null) {
+            // Достаем параметры из запроса и обновляем клиента
+            String newName = req.getParameter("name");
+            if (newName != null && !newName.isEmpty()) {
+                client.setName(newName);
+            }
+            crud.updateClient(id, newName);
+            writer.write("Person updated successfully.");
+        } else {
+            writer.write("Person not found or could not be updated.");
+        }
     }
 
     @Override
