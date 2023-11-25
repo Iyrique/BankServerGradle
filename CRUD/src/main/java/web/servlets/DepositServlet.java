@@ -121,7 +121,7 @@ public class DepositServlet extends HttpServlet {
                 percent != null && !percent.isEmpty() && topUp != null && !topUp.isEmpty() &&
                 period != null && !period.isEmpty() && withdraw != null && !withdraw.isEmpty()) {
             crud.createDeposit(Integer.parseInt(clientId), Double.parseDouble(sum),
-                    Double.parseDouble(percent), period, Boolean.getBoolean(topUp), Boolean.getBoolean(withdraw));
+                    Double.parseDouble(percent), period, Boolean.parseBoolean(topUp), Boolean.parseBoolean(withdraw));
             resp.getWriter().write("Deposit created successfully.");
         } else {
             resp.getWriter().write("Invalid parameters for creating a deposit.");
