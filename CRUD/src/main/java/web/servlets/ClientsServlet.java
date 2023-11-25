@@ -45,19 +45,38 @@ public class ClientsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            try {
-                sendAllPersons(resp);
-            } catch (SQLException e) {
-                e.printStackTrace();
+        if (pathInfo != null) {
+            String[] pathParts = pathInfo.split("/");
+            if (pathParts.length > 1) {
+                String command = pathParts[1];
+                if ("getAll".equals(command)) {
+                    try {
+                        sendAllPersons(resp);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else if ("getById".equals(command)) {
+                    int id = Integer.parseInt(pathParts[2]);
+                    try {
+                        sendPersonById(id, resp);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else if ("getByName".equals(command)) {
+                    String name = req.getParameter("name");
+                    try {
+                        sendPersonByName(name, resp);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    resp.getWriter().write("Invalid command.");
+                }
+            } else {
+                resp.getWriter().write("Invalid path.");
             }
         } else {
-            int id = Integer.parseInt(pathInfo.substring(1));
-            try {
-                sendPersonById(id, resp);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            resp.getWriter().write("Path not specified.");
         }
     }
 
@@ -65,7 +84,7 @@ public class ClientsServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         List<Client> clients = new ArrayList<>();
         clients = crud.getAllClients();
-        writer.write("List of Persons:\n");
+        writer.write("List of Clients:\n");
         for (Client person : clients) {
             writer.write(person.toString() + "\n");
         }
@@ -75,7 +94,17 @@ public class ClientsServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         Client client = crud.readClientById(id);
         if (client == null) {
-            writer.write("Клиента не существует");
+            writer.write("Client not found");
         } else writer.write(client.toString());
+    }
+
+    private void sendPersonByName(String name, HttpServletResponse response) throws IOException, SQLException {
+        PrintWriter writer = response.getWriter();
+        Client client = crud.readClientByName(name);
+        if (client != null) {
+            writer.write("Client found:\n" + client.toString());
+        } else {
+            writer.write("Client not found.");
+        }
     }
 }
