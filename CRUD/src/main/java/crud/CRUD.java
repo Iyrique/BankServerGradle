@@ -194,8 +194,9 @@ public class CRUD {
         return true;
     }
 
-    public void deleteCredit(int creditId) throws SQLException {
+    public boolean deleteCredit(int creditId) throws SQLException {
         creditCRUD.deleteCreditById(creditId);
+        return true;
     }
 
     public void deleteDeposit(int depositId) throws SQLException {

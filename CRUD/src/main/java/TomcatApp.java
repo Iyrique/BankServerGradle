@@ -4,6 +4,7 @@ import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 import web.servlets.BankServlet;
 import web.servlets.ClientsServlet;
+import web.servlets.CreditServlet;
 
 import java.sql.SQLException;
 
@@ -22,6 +23,10 @@ public class TomcatApp {
         Wrapper bankServlet = Tomcat.addServlet(ctx, "bankServlet", new BankServlet());
         bankServlet.setLoadOnStartup(1);
         bankServlet.addMapping("/bank");
+
+        Wrapper creditServlet = Tomcat.addServlet(ctx, "creditServlet", new CreditServlet());
+        creditServlet.setLoadOnStartup(1);
+        creditServlet.addMapping("/credit/*");
 
         tomcat.start();
     }
