@@ -211,10 +211,11 @@ public class CRUD {
         cardAccountCRUD.deleteCardAccount(clientId);
     }
 
-    public void deleteAccount(int clientId) throws SQLException {
+    public boolean deleteAccount(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);
         Account account = accountCRUD.findAccountByClientId(clientId);
         accountCRUD.deleteAccount(account.getCardAccId());
+        return true;
     }
 
     public void deleteCard(int clientId) throws SQLException {
