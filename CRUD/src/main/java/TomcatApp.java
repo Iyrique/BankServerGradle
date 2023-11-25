@@ -2,6 +2,7 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
+import web.servlets.BankServlet;
 import web.servlets.ClientsServlet;
 
 import java.sql.SQLException;
@@ -14,9 +15,14 @@ public class TomcatApp {
         tomcat.getConnector();
 
         Context ctx = tomcat.addContext("", null);
-        Wrapper servlet = Tomcat.addServlet(ctx, "clientServlet", new ClientsServlet());
-        servlet.setLoadOnStartup(1);
-        servlet.addMapping("/client/*");
+        Wrapper clientServlet = Tomcat.addServlet(ctx, "clientServlet", new ClientsServlet());
+        clientServlet.setLoadOnStartup(1);
+        clientServlet.addMapping("/client/*");
+
+        Wrapper bankServlet = Tomcat.addServlet(ctx, "bankServlet", new BankServlet());
+        bankServlet.setLoadOnStartup(1);
+        bankServlet.addMapping("/bank");
+
         tomcat.start();
     }
 }

@@ -2,12 +2,10 @@ package web.servlets;
 
 import connection.ConnectDB;
 import crud.CRUD;
-import crud.dao.ClientDAO;
 import entity.Client;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
