@@ -80,6 +80,72 @@ public class ClientsServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        if (pathInfo != null) {
+            String[] pathParts = pathInfo.split("/");
+            if (pathParts.length > 1 && "create".equals(pathParts[1])) {
+                try {
+                    createPerson(req, resp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                resp.getWriter().write("Invalid path for POST request.");
+            }
+        } else {
+            resp.getWriter().write("Path not specified for POST request.");
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        if (pathInfo != null) {
+            String[] pathParts = pathInfo.split("/");
+            if (pathParts.length > 1 && "delete".equals(pathParts[1])) {
+                int id = Integer.parseInt(pathParts[2]);
+                try {
+                    deletePersonById(id, resp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                resp.getWriter().write("Invalid path for DELETE request.");
+            }
+        } else {
+            resp.getWriter().write("Path not specified for DELETE request.");
+        }
+    }
+
+    private void createPerson(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+        String name = req.getParameter("name");
+        String birthday = req.getParameter("birthday");
+
+        if (name != null && !name.isEmpty() && birthday != null && !birthday.isEmpty()) {
+            crud.createClient(name, birthday);
+            resp.getWriter().write("Person created successfully.");
+        } else {
+            resp.getWriter().write("Invalid parameters for creating a person.");
+        }
+    }
+
+    private void deletePersonById(int id, HttpServletResponse response) throws IOException, SQLException {
+        PrintWriter writer = response.getWriter();
+        boolean deleted = crud.deleteClient(id);
+        if (deleted) {
+            writer.write("Person deleted successfully.");
+        } else {
+            writer.write("Person not found or could not be deleted.");
+        }
+    }
+
     private void sendAllPersons(HttpServletResponse response) throws IOException, SQLException {
         PrintWriter writer = response.getWriter();
         List<Client> clients = new ArrayList<>();

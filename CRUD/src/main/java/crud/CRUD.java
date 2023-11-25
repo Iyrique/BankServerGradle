@@ -5,10 +5,8 @@ import entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class CRUD {
 
@@ -171,7 +169,7 @@ public class CRUD {
 //        }
 //    }
 
-    public void deleteClient(int clientId) throws SQLException {
+    public boolean deleteClient(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);
         Account account = accountCRUD.findAccountByClientId(clientId);
         if (account != null) accountCRUD.deleteAccount(account.getCardAccId());
@@ -193,6 +191,7 @@ public class CRUD {
             }
         }
         clientCRUD.deleteClient(clientId);
+        return true;
     }
 
     public void deleteCredit(int creditId) throws SQLException {
