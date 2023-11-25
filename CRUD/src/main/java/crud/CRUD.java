@@ -204,11 +204,12 @@ public class CRUD {
         return true;
     }
 
-    public void deleteCardAccount(int clientId) throws SQLException {
+    public boolean deleteCardAccount(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);
         Account account = accountCRUD.findAccountByClientId(clientId);
         if (account != null) accountCRUD.deleteAccount(account.getCardAccId());
         cardAccountCRUD.deleteCardAccount(clientId);
+        return true;
     }
 
     public boolean deleteAccount(int clientId) throws SQLException {

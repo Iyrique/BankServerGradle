@@ -3,7 +3,6 @@ package web.servlets;
 import connection.ConnectDB;
 import crud.CRUD;
 import entity.Card;
-import entity.Credit;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
