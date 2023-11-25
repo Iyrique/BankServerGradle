@@ -4,9 +4,11 @@ import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 import web.servlets.ClientsServlet;
 
+import java.sql.SQLException;
+
 public class TomcatApp {
 
-    public static void main(String[] args) throws LifecycleException {
+    public static void main(String[] args) throws LifecycleException, SQLException {
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8080);
         tomcat.getConnector();

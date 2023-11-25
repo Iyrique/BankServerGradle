@@ -3,7 +3,6 @@ package crud;
 import crud.dao.*;
 import entity.*;
 
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class ConsoleCRUD {
+public class CRUD {
 
     private AccountDAO accountCRUD;
     private BankDAO bankCRUD;
@@ -21,7 +20,7 @@ public class ConsoleCRUD {
     private CreditDAO creditCRUD;
     private DepositDAO depositCRUD;
 
-    public ConsoleCRUD(Connection connection) {
+    public CRUD(Connection connection) {
         this.accountCRUD = new AccountDAO(connection);
         this.bankCRUD = new BankDAO(connection);
         this.cardAccountCRUD = new CardAccountDAO(connection);
@@ -62,152 +61,115 @@ public class ConsoleCRUD {
         cardCRUD.createCard(clientId, client, generateCreditCardNumber());
     }
 
-    public void readClientById(int id) throws SQLException {
+    public Client readClientById(int id) throws SQLException {
         Client client = clientCRUD.readClientById(id, null, null, null);
         if (client != null) {
             client.setCredits(creditCRUD.readCreditsByClientId(client.getId()));
             client.setDeposits(depositCRUD.readDepositsByClientId(client.getId()));
             client.setCardAccounts(cardAccountCRUD.readCardAccount(id, client, accountCRUD.findAccountByClientId(id),
                     cardCRUD.findCardByClientId(id, accountCRUD.findAccountByClientId(id))));
-            System.out.println(client.toString());
-        } else System.out.println("Клиента не существует!");
+        }
+        return client;
     }
 
-    public void readClientByName(String name) throws SQLException {
+    public Client readClientByName(String name) throws SQLException {
         Client client = clientCRUD.readClientByName(name, null, null, null);
         if (client != null) {
             client.setCredits(creditCRUD.readCreditsByClientId(client.getId()));
             client.setDeposits(depositCRUD.readDepositsByClientId(client.getId()));
             client.setCardAccounts(cardAccountCRUD.readCardAccount(client.getId(), client, accountCRUD.findAccountByClientId(client.getId()),
                     cardCRUD.findCardByClientName(name, accountCRUD.findAccountByClientId(client.getId()))));
-            System.out.println(client.toString());
-        } else System.out.println("Клиента не существует!");
-    }
-
-    public void readCreditById(int creditId) throws SQLException {
-        Credit credit = creditCRUD.readCreditById(creditId);
-        if (credit != null) {
-            System.out.println(credit.toString());
-        } else System.out.println("Кредита не существует!");
-    }
-
-    public void readCreditsById(int clientId) throws SQLException {
-        List<Credit> credits = new ArrayList<>();
-        credits = creditCRUD.readCreditsByClientId(clientId);
-        if (credits.isEmpty()) {
-            System.out.println("Кредитов нет!");
-        } else {
-            for (Credit credit : credits) {
-                System.out.println(credit.toString());
-            }
         }
+        return client;
     }
 
-    public void readDepositById(int depositId) throws SQLException {
-        Deposit deposit = depositCRUD.readDepositById(depositId);
-        if (deposit != null) {
-            System.out.println(deposit.toString());
-        } else System.out.println("Не существует!");
+    public Credit readCreditById(int creditId) throws SQLException {
+        return creditCRUD.readCreditById(creditId);
+
     }
 
-    public void readDepositsById(int clientId) throws SQLException {
-        List<Deposit> deposits = new ArrayList<>();
-        deposits = depositCRUD.readDepositsByClientId(clientId);
-        if (deposits.isEmpty()) {
-            System.out.println("Депозитов нет!");
-        } else {
-            for (Deposit deposit : deposits) {
-                System.out.println(deposit.toString());
-            }
-        }
+    public List<Credit> readCreditsById(int clientId) throws SQLException {
+        return creditCRUD.readCreditsByClientId(clientId);
     }
 
-    public void readCardAccount(int clientId) throws SQLException {
+    public Deposit readDepositById(int depositId) throws SQLException {
+        return depositCRUD.readDepositById(depositId);
+    }
+
+    public List<Deposit> readDepositsById(int clientId) throws SQLException {
+        return depositCRUD.readDepositsByClientId(clientId);
+    }
+
+    public CardAccount readCardAccount(int clientId) throws SQLException {
         Account account = accountCRUD.findAccountByClientId(clientId);
         Client client = clientCRUD.readClientById(clientId, null, null, null);
-        System.out.println(cardAccountCRUD.readCardAccount(clientId, client, account, cardCRUD.findCardByClientId(clientId,
-                accountCRUD.findAccountByClientId(clientId))).toString());
+        return cardAccountCRUD.readCardAccount(clientId, client, account, cardCRUD.findCardByClientId(clientId,
+                accountCRUD.findAccountByClientId(clientId)));
     }
 
-    public void readAccount(int clientId) throws SQLException {
-        Account account = accountCRUD.findAccountByClientId(clientId);
-        System.out.println(account.toString());
+    public Account readAccount(int clientId) throws SQLException {
+        return accountCRUD.findAccountByClientId(clientId);
     }
 
-    public void readCard(int clientId) throws SQLException {
-        System.out.println(cardCRUD.findCardByClientId(clientId, accountCRUD.findAccountByClientId(clientId)).toString());
+    public Card readCard(int clientId) throws SQLException {
+        return cardCRUD.findCardByClientId(clientId, accountCRUD.findAccountByClientId(clientId));
     }
 
-    public void updateClient(int clientId) throws SQLException {
+    public void updateClient(int clientId, String name) throws SQLException {
         Client client = clientCRUD.readClientById(clientId, null, null, null);
         if (client != null) {
-            System.out.println("Введите имя: ");
-            Scanner scanner = new Scanner(System.in);
-            String name = scanner.next();
-            name += " ";
-            name += scanner.next();
             client.setName(name);
             client.setCredits(creditCRUD.readCreditsByClientId(client.getId()));
             client.setDeposits(depositCRUD.readDepositsByClientId(client.getId()));
             client.setCardAccounts(cardAccountCRUD.readCardAccount(clientId, client, accountCRUD.findAccountByClientId(clientId),
                     cardCRUD.findCardByClientId(clientId, accountCRUD.findAccountByClientId(clientId))));
-            System.out.println(client.toString());
             clientCRUD.updateClient(client);
             System.out.println("Обновлено!");
         } else System.out.println("Клиента не существует!");
     }
 
-    public void updateCredit(int id) throws SQLException {
+    public void updateCredit(int id, double sum, double percent, double payment) throws SQLException {
         Credit credit = creditCRUD.readCreditById(id);
-        Scanner scanner = new Scanner(System.in);
         if (credit != null) {
-            System.out.println("Введите сумму кредита: ");
-            credit.setSum(scanner.nextDouble());
-            System.out.println("Введите проценты: ");
-            credit.setPercent(scanner.nextDouble());
-            System.out.println("Введите размер ежемесячного платежа: ");
-            credit.setMonthlyPayment(scanner.nextDouble());
+            credit.setSum(sum);
+            credit.setPercent(percent);
+            credit.setMonthlyPayment(payment);
             creditCRUD.updateCredit(credit);
         } else System.out.println("Кредита нет");
     }
 
-    public void updateDeposit(int id) throws SQLException {
+    public void updateDeposit(int id, double sum, double percent) throws SQLException {
         Deposit deposit = depositCRUD.readDepositById(id);
-        Scanner scanner = new Scanner(System.in);
         if (deposit != null) {
-            System.out.println("Введите сумму депозита: ");
-            deposit.setSum(scanner.nextDouble());
-            System.out.println("Введите проценты: ");
-            deposit.setPercent(scanner.nextDouble());
+            deposit.setSum(sum);
+            deposit.setPercent(percent);
             depositCRUD.updateDeposit(deposit);
         } else System.out.println("Депозита нет!");
     }
 
-    public void updateCardAccount(int id) throws SQLException {
-        Account account = accountCRUD.findAccountByClientId(id);
-        Client client = clientCRUD.readClientById(id, null, null, null);
-        Scanner scanner = new Scanner(System.in);
-        CardAccount cardAccount = null;
-        if (client.getCardAccounts().getCard() != null) {
-            cardAccount = cardAccountCRUD.readCardAccount(id, client, account, client.getCardAccounts().getCard());
-        }
-        if (cardAccount != null) {
-            System.out.println("Введите кодовое слово:");
-            cardAccount.setCodeWord(scanner.next());
-            cardAccountCRUD.updateCardAccount(cardAccount);
-        } else System.out.println("CardAccount null!");
-    }
-
-    public void updateAccount(int id) throws SQLException {
-        Account account = accountCRUD.findAccountByClientId(id);
-        Scanner scanner = new Scanner(System.in);
-        if (account != null) {
-            account.setBalance(scanner.nextDouble());
-            accountCRUD.updateAccount(account);
-        } else System.out.println("Account null!");
-    }
-
-
+//    public void updateCardAccount(int id) throws SQLException {
+//        Account account = accountCRUD.findAccountByClientId(id);
+//        Client client = clientCRUD.readClientById(id, null, null, null);
+//        Scanner scanner = new Scanner(System.in);
+//        CardAccount cardAccount = null;
+//        if (client.getCardAccounts().getCard() != null) {
+//            cardAccount = cardAccountCRUD.readCardAccount(id, client, account, client.getCardAccounts().getCard());
+//        }
+//        if (cardAccount != null) {
+//            System.out.println("Введите кодовое слово:");
+//            cardAccount.setCodeWord(scanner.next());
+//            cardAccountCRUD.updateCardAccount(cardAccount);
+//        } else System.out.println("CardAccount null!");
+//    }
+//
+//    public void updateAccount(int id) throws SQLException {
+//        Account account = accountCRUD.findAccountByClientId(id);
+//        Scanner scanner = new Scanner(System.in);
+//        if (account != null) {
+//            account.setBalance(scanner.nextDouble());
+//            accountCRUD.updateAccount(account);
+//        }
+//    }
 
     public void deleteClient(int clientId) throws SQLException {
         cardCRUD.deleteCard(clientId);
@@ -258,53 +220,32 @@ public class ConsoleCRUD {
         cardCRUD.deleteCard(clientId);
     }
 
-    public void getAllBanks() {
-        List<Bank> banks = bankCRUD.getAll();
-        for (Bank bank : banks) {
-            System.out.println(bank.toString());
-        }
+    public List<Bank> getAllBanks() {
+        return bankCRUD.getAll();
     }
 
-    public void getAllClients() {
-        List<Client> clients = clientCRUD.getAll();
-        for (Client client : clients) {
-            System.out.println(client.toString());
-        }
+    public List<Client> getAllClients() {
+        return clientCRUD.getAll();
     }
 
-    public void getAllAccounts() {
-        List<Account> accounts = accountCRUD.getAll();
-        for (Account account : accounts) {
-            System.out.println(account.toString());
-        }
+    public List<Account> getAllAccounts() {
+        return accountCRUD.getAll();
     }
 
-    public void getAllCardAccounts() {
-        List<CardAccount> cardAccounts = cardAccountCRUD.getAll();
-        for (CardAccount cardAccount : cardAccounts) {
-            System.out.println(cardAccount.toString());
-        }
+    public List<CardAccount> getAllCardAccounts() {
+        return cardAccountCRUD.getAll();
     }
 
-    public void getAllCards() {
-        List<Card> cards = cardCRUD.getAll();
-        for (Card card : cards) {
-            System.out.println(card.toString());
-        }
+    public List<Card> getAllCards() {
+        return cardCRUD.getAll();
     }
 
-    public void getAllCredits() {
-        List<Credit> credits = creditCRUD.getAll();
-        for (Credit credit : credits) {
-            System.out.println(credit.toString());
-        }
+    public List<Credit> getAllCredits() {
+        return creditCRUD.getAll();
     }
 
-    public void getAllDeposits() {
-        List<Deposit> deposits = depositCRUD.getAll();
-        for (Deposit deposit : deposits) {
-            System.out.println(deposit.toString());
-        }
+    public List<Deposit> getAllDeposits() {
+        return depositCRUD.getAll();
     }
 
     // Генерация случайного номера счета
